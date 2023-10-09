@@ -7,6 +7,8 @@ Funktionen:
 - Man kann gerichte neu generieren lassen
 - es soll niemals ein rezept der woche vorher oder wenn man einzelne nachgeneriert wiederverwendet werden (immer neue)
 (bedingung: genug rezepte in der liste für 2-3 Wochen)
+- Haupbildschirm immer montags 00:00 reseten
+- man kann von 1-7 gerichte generieren lassen (nachträglich änderbar)
 
 Optional:
 
