@@ -1,0 +1,15 @@
+Funktionen:
+
+- Rezeptliste mit simpler Ansicht
+- Detailansicht jedes Rezept
+- Hauptseite soll Woche anzeigen die generiert wurde
+- Wenn nicht generiert wurde kann man generieren drücken
+- Man kann gerichte neu generieren lassen
+- es soll niemals ein rezept der woche vorher oder wenn man einzelne nachgeneriert wiederverwendet werden (immer neue)
+(bedingung: genug rezepte in der liste für 2-3 Wochen)
+
+Optional:
+
+- Zutatenliste aller ausgewählten Rezepte
+- generieren einer Einkaufsliste
+
