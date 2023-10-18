@@ -4,25 +4,16 @@ import java.util.List;
 
 public class Recipe {
 
-    private int id;
+
     private String name;
     private List<String> zutaten;
     private String beschreibung;
 
 
-    public Recipe(int id, String name, List<String> zutaten, String beschreibung) {
-        this.id = id;
+    public Recipe(String name, List<String> zutaten, String beschreibung) {
         this.name = name;
         this.zutaten = zutaten;
         this.beschreibung = beschreibung;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
