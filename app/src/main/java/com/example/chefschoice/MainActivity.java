@@ -8,9 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.chefschoice.DAO.IngredientDAO;
+import com.example.chefschoice.DAO.IngredientDAOImpl;
 import com.example.chefschoice.DAO.RecipeDAO;
 import com.example.chefschoice.DAO.RecipeDAOImpl;
 import com.example.chefschoice.DB.DatabaseHelper;
+import com.example.chefschoice.Model.Ingredient;
 import com.example.chefschoice.Model.Recipe;
 
 import java.util.ArrayList;
@@ -22,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextIngredients;
     private EditText editTextDescription;
     private Button buttonSaveRecipe;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +49,26 @@ public class MainActivity extends AppCompatActivity {
                 String description = editTextDescription.getText().toString();
 
                 String[] ingredientsArray =     ingredients.split(",");
-                List<String> ingredientsList = new ArrayList<>();
-                for (String ingredient : ingredientsArray) {
-                    ingredientsList.add(ingredient.trim()); // Leerzeichen entfernen
-                }
+                List<Long> ingredientsList = getIngredientList(ingredientsArray, db);
                 Recipe rezept = new Recipe(recipeName,ingredientsList,description);
 
                 rezeptDAO.addRecipe(rezept);
-
             }
         });
+    }
+
+    public List<Long> getIngredientList(String[] zutaten, SQLiteDatabase db){
+        IngredientDAOImpl ingredientDAO = new IngredientDAOImpl(db);
+        List<Long> ingredientsList = new ArrayList<>();
+        for (String ingredient : zutaten) {
+            Ingredient aktZutat = ingredientDAO.getIngredientByName(ingredient.toUpperCase());
+
+                Ingredient neueZutat = new Ingredient(0, ingredient, 0, 0, null);
+                long id = ingredientDAO.insertIngredient(neueZutat);
+
+                ingredientsList.add(id);
+
+        }
+        return ingredientsList;
     }
 }

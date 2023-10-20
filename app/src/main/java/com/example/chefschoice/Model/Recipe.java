@@ -6,11 +6,11 @@ public class Recipe {
 
 
     private String name;
-    private List<String> zutaten;
+    private List<Long> zutaten;
     private String beschreibung;
 
 
-    public Recipe(String name, List<String> zutaten, String beschreibung) {
+    public Recipe(String name, List<Long> zutaten, String beschreibung) {
         this.name = name;
         this.zutaten = zutaten;
         this.beschreibung = beschreibung;
@@ -24,11 +24,11 @@ public class Recipe {
         this.name = name;
     }
 
-    public List<String> getZutaten() {
+    public List<Long> getZutaten() {
         return zutaten;
     }
 
-    public void setZutaten(List<String> zutaten) {
+    public void setZutaten(List<Long> zutaten) {
         this.zutaten = zutaten;
     }
 

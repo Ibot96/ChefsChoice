@@ -21,6 +21,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "Name TEXT,"
                 + "Beschreibung TEXT,"
                 + "Zutaten TEXT);");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS Zutaten ("
+                + "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "RezeptID INTEGER,"
+                + "Name TEXT,"
+                + "Menge REAL,"
+                + "Einheit TEXT,"  +
+                "FOREIGN KEY (RezeptID) REFERENCES Rezepte(id) ON DELETE CASCADE);");
     }
 
     @Override
