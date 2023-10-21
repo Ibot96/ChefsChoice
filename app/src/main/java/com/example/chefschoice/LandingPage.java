@@ -13,13 +13,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class LandingPage extends AppCompatActivity{
     ArrayList<ViewPagerItem> viewPagerItems;
     ViewPager2 viewPager;
-    Button genButton;
+
+    FloatingActionButton menuFab;
+    FloatingActionButton addFab,createFab, listFab;
+
+    Boolean areFabsVisible;
+
 
 
 
@@ -28,11 +36,47 @@ public class LandingPage extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.landing_page);
         initViewpager();
+        initFABMenu();
+
+
 
 
 
     }
 
+    private void initFABMenu(){
+        addFab = (FloatingActionButton) findViewById(R.id.menu_add);
+        createFab = (FloatingActionButton) findViewById(R.id.menu_create);
+        listFab = (FloatingActionButton) findViewById(R.id.menu_list);
+        menuFab = (FloatingActionButton) findViewById(R.id.menu);
+
+        //Hide buttons
+        addFab.setVisibility(View.GONE);
+        createFab.setVisibility(View.GONE);
+        listFab.setVisibility(View.GONE);
+        areFabsVisible = false;
+
+        menuFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!areFabsVisible){
+                    //show
+                    addFab.show();
+                    createFab.show();
+                    listFab.show();
+
+                    areFabsVisible = true;
+                }else{
+                    //hide
+                    addFab.hide();
+                    createFab.hide();
+                    listFab.hide();
+
+                    areFabsVisible = false;
+                }
+            }
+        });
+    }
     private void initViewpager(){
         viewPager = findViewById(R.id.ViewPager);
         int[] images = {

@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.ChefsChoice" parent="Theme.Material3.Light">
+    <style name="Base.Theme.ChefsChoice" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your light theme here. -->
         <!--Color-->
          <item name="colorPrimary">@color/Primary_Color_Light</item>

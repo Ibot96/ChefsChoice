@@ -19,5 +19,65 @@
 
     </androidx.viewpager2.widget.ViewPager2>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/menu"
+            style="@style/Widget.Design.FloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="Menu um Funktionen auszuführen"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/ic_action_menu"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:fabSize="normal"
+            />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/menu_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.FloatingActionButton"
+            android:contentDescription="Rezepte der liste hinzufügen"
+            app:fabSize="normal"
+            app:layout_constraintCircle="@id/menu"
+            app:layout_constraintCircleAngle="50"
+            app:layout_constraintCircleRadius="80dp"
+            android:src="@drawable/ic_action_add"
+            tools:ignore="MissingConstraints" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/menu_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.FloatingActionButton"
+            android:contentDescription="Rezeptliste anzeigen"
+            app:fabSize="normal"
+            app:layout_constraintCircle="@id/menu"
+            app:layout_constraintCircleAngle="0"
+            app:layout_constraintCircleRadius="80dp"
+            android:src="@drawable/ic_action_list"
+            tools:ignore="MissingConstraints" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/menu_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.FloatingActionButton"
+            android:contentDescription="Woche generieren lassen"
+            app:fabSize="normal"
+            app:layout_constraintCircle="@id/menu"
+            app:layout_constraintCircleAngle="310"
+            app:layout_constraintCircleRadius="80dp"
+            android:src="@drawable/ic_action_createweek"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

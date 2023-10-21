@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.ChefsChoice" parent="Theme.Material3.DayNight">
+    <style name="Base.Theme.ChefsChoice" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Customize your dark theme here. -->
         <item name="colorPrimary">@color/Primary_Color_Daynight</item>
         <item name="colorPrimaryDark">@color/Primary_Color_Daynight_Dark</item>
