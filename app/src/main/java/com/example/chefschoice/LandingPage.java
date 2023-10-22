@@ -1,7 +1,9 @@
 package com.example.chefschoice;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
@@ -12,6 +14,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,6 +30,7 @@ public class LandingPage extends AppCompatActivity{
     FloatingActionButton addFab,createFab, listFab;
 
     Boolean areFabsVisible;
+    androidx.appcompat.widget.Toolbar toolbar;
 
 
 
@@ -35,6 +39,9 @@ public class LandingPage extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.landing_page);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         initViewpager();
         initFABMenu();
 
@@ -76,8 +83,11 @@ public class LandingPage extends AppCompatActivity{
                 }
             }
         });
+        //todo hier die weiteren onclicklistener für die buttons
+
     }
     private void initViewpager(){
+        //todo bilder müssen auf bestimmte größe angepasst werden
         viewPager = findViewById(R.id.ViewPager);
         int[] images = {
                 R.drawable.saumagen,
@@ -85,11 +95,12 @@ public class LandingPage extends AppCompatActivity{
                 R.drawable.schnitzel,
                 R.drawable.steak
         };
+
         String[] rezeptname = {
-                "saumagen",
-                "kartoffelsalat",
-                "schnitzel",
-                "steak"
+                "Saumagen",
+                "Kartoffelsalat",
+                "Schnitzel",
+                "Steak"
         };
         viewPagerItems = new ArrayList<>();
         for(int i=0;i< images.length;i++){
@@ -121,6 +132,8 @@ public class LandingPage extends AppCompatActivity{
 
     //Rufe die generierenActivity auf
     public void genTage(View v) {
+
+
 
     }
     //neu laden des ausgewählten Tages
