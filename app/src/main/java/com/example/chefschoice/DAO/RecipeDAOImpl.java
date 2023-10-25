@@ -1,6 +1,7 @@
 package com.example.chefschoice.DAO;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
@@ -27,17 +28,34 @@ public class RecipeDAOImpl implements RecipeDAO{
     }
 
     @Override
-    public void addRecipe(Recipe rezept) {
+    public long addRecipe(Recipe rezept) {
         ContentValues values = new ContentValues();
         values.put("name", rezept.getName());
-        values.put("zutaten", TextUtils.join(",",rezept.getZutaten()));
+
         values.put("beschreibung", rezept.getBeschreibung());
 
         long newRow = db.insert("Rezepte", null, values);
+        return newRow;
     }
 
     @Override
     public void deleteRecipe(int id) {
 
     }
+
+    @Override
+    public long getNextRecipeId() {
+        Cursor cursor = db.rawQuery("SELECT MAX(id) +1 FROM Rezepte", null);
+
+        long nextId = 1;
+
+        if(cursor != null){
+            if(cursor.moveToFirst()){
+                nextId = cursor.getLong(0);
+            }
+            cursor.close();
+        }
+        return nextId;
+    }
+
 }

@@ -37,4 +37,10 @@
         android:id="@+id/buttonSaveRecipe"
         android:layout_below="@id/editTextDescription" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rezepte anzeigen"
+        android:id="@+id/buttonshow"
+        android:layout_below="@id/buttonSaveRecipe" />
 </RelativeLayout>

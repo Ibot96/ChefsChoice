@@ -18,6 +18,7 @@ public class IngredientDAOImpl implements IngredientDAO{
     public long insertIngredient(Ingredient zutat) {
         ContentValues values = new ContentValues();
         values.put("name", zutat.getName());
+        values.put("RezeptId", zutat.getRecipeId());
         long id = db.insert("Zutaten", null, values);
         zutat.setId(id);
         return id;

@@ -6,13 +6,15 @@ public class Recipe {
 
 
     private String name;
-    private List<Long> zutaten;
+
     private String beschreibung;
 
+    private byte[] bild;
 
-    public Recipe(String name, List<Long> zutaten, String beschreibung) {
+
+    public Recipe(String name, String beschreibung, byte[] bild) {
         this.name = name;
-        this.zutaten = zutaten;
+        this.bild = bild;
         this.beschreibung = beschreibung;
     }
 
@@ -24,12 +26,12 @@ public class Recipe {
         this.name = name;
     }
 
-    public List<Long> getZutaten() {
-        return zutaten;
+    public byte[] getBild() {
+        return bild;
     }
 
-    public void setZutaten(List<Long> zutaten) {
-        this.zutaten = zutaten;
+    public void setBild(byte[] bild) {
+        this.bild = bild;
     }
 
     public String getBeschreibung() {

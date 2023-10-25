@@ -33,4 +33,29 @@ public class Ingredient {
     public void setName(String name) {
         this.name = name;
     }
+
+
+    public long getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(long recipeId) {
+        this.recipeId = recipeId;
+    }
+
+    public double getMenge() {
+        return menge;
+    }
+
+    public void setMenge(double menge) {
+        this.menge = menge;
+    }
+
+    public String getEinheit() {
+        return einheit;
+    }
+
+    public void setEinheit(String einheit) {
+        this.einheit = einheit;
+    }
 }

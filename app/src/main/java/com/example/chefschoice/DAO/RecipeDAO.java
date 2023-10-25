@@ -8,7 +8,8 @@ public interface RecipeDAO {
 
     Recipe getRecipe(int id);
     List<Recipe> getAllRecipes();
-    void addRecipe(Recipe rezept);
+    long addRecipe(Recipe rezept);
     void deleteRecipe(int id);
 
+    long getNextRecipeId();
 }
