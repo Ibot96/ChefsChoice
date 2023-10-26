@@ -22,7 +22,7 @@ public class RezeptUebersicht extends AppCompatActivity {
     private ListView liste;
     private RecipeDAOImpl recipeDAO;
 
-    private List<Recipe> rezepte;
+    private ArrayList<Recipe> rezepte;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,19 +31,14 @@ public class RezeptUebersicht extends AppCompatActivity {
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-
+        recipeDAO = new RecipeDAOImpl(db);
+        rezepte = recipeDAO.getAllRecipes();
 
         liste = findViewById(R.id.liste);
 
-        Recipe Test1 = new Recipe("Pfannkuchen", "Test1", null);
-        Recipe Test2 = new Recipe("Pfannkuchen", "Test1", null);
 
-        ArrayList<Recipe> rezeptliste = new ArrayList<>();
-        rezeptliste.add(Test1);
-        rezeptliste.add(Test2);
 
-        RecipeListAdapter adapter = new RecipeListAdapter(this, R.layout.list_adapter, rezeptliste);
+        RecipeListAdapter adapter = new RecipeListAdapter(this, R.layout.list_adapter, rezepte);
 
         liste.setAdapter(adapter);
     }
