@@ -1,8 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.ChefsChoice" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.ChefsChoice" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!--Color-->
+         <item name="colorPrimary">@color/Primary_Color_Light_Dark</item>
+         <item name="colorPrimaryDark">@color/Primary_Color_Light</item>
+         <item name="colorAccent">@color/Accent_Color_Light</item>
+
+         <item name="android:colorBackground">@color/Primary_Color_Light</item>
+
+        <!--Text-->
+         <item name="android:textColorPrimary">@color/Primary_Text</item>
+         <!--<item name="SecondaryTextAppearance">@color/Secondary_Text</item>-->
+
+
     </style>
 
     <style name="Theme.ChefsChoice" parent="Base.Theme.ChefsChoice" />

@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">ChefsChoice</string>
+    <string name="app_name">Chef´s Choice</string>
+    <string name="genbutton">Generieren</string>
+
 </resources>
