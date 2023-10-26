@@ -4,25 +4,18 @@ import java.util.List;
 
 public class Recipe {
 
-    private int id;
+
     private String name;
-    private List<String> zutaten;
+
     private String beschreibung;
 
+    private byte[] bild;
 
-    public Recipe(int id, String name, List<String> zutaten, String beschreibung) {
-        this.id = id;
+
+    public Recipe(String name, String beschreibung, byte[] bild) {
         this.name = name;
-        this.zutaten = zutaten;
+        this.bild = bild;
         this.beschreibung = beschreibung;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -33,12 +26,12 @@ public class Recipe {
         this.name = name;
     }
 
-    public List<String> getZutaten() {
-        return zutaten;
+    public byte[] getBild() {
+        return bild;
     }
 
-    public void setZutaten(List<String> zutaten) {
-        this.zutaten = zutaten;
+    public void setBild(byte[] bild) {
+        this.bild = bild;
     }
 
     public String getBeschreibung() {
