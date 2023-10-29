@@ -5,10 +5,9 @@
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="350dp"
         app:cardCornerRadius="20dp"
-        android:layout_margin="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -20,7 +19,8 @@
             android:id="@+id/viewpageritemcard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/card_corner">
+            android:elevation="5dp"
+            >
 
 
             <ImageView

@@ -1,4 +1,4 @@
-package com.example.chefschoice;
+package com.example.chefschoice.Adapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,16 +10,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.chefschoice.Model.Recipe;
+import com.example.chefschoice.R;
+
 import java.util.ArrayList;
 
 public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.ViewHolder> {
 
    Context context;
-   ArrayList<ViewPagerItem> viewPagerItems;
 
-    public ViewPagerAdapter(Context context, ArrayList<ViewPagerItem> viewPagerItems) {
+   ArrayList<Recipe> recipes;
+
+
+    public ViewPagerAdapter(Context context, ArrayList<Recipe> recipes) {
         this.context = context;
-        this.viewPagerItems = viewPagerItems;
+        this.recipes = recipes;
     }
 
     @NonNull
@@ -32,15 +37,15 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ViewPagerItem item = viewPagerItems.get(position);
+        Recipe item = recipes.get(position);
 
-        holder.imageView.setImageResource(item.imageID);
-        holder.rezeptname.setText(item.rezeptName);
+        /*holder.imageView.setImageResource(item.getBild());*/ // todo byte[] -> int schauen
+        holder.rezeptname.setText(item.getName());
     }//ordnet werte den views zu die in dem layout file gebaut wurden basierend auf der position der recycler view
 
     @Override
     public int getItemCount() {
-        return viewPagerItems.size();
+        return recipes.size();
     }//die recycler view will wissen wieviel items auf dem bildschirm sind
 
     public class ViewHolder extends RecyclerView.ViewHolder{

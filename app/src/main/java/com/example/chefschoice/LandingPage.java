@@ -1,36 +1,31 @@
 package com.example.chefschoice;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.example.chefschoice.Adapter.ViewPagerAdapter;
+import com.example.chefschoice.Model.Recipe;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class LandingPage extends AppCompatActivity{
-    ArrayList<ViewPagerItem> viewPagerItems;
-    ViewPager2 viewPager;
+    private ArrayList<Recipe> recipes;
+    private ViewPager2 viewPager;
 
-    FloatingActionButton menuFab;
-    FloatingActionButton addFab,createFab, listFab;
+    private FloatingActionButton menuFab;
+    private FloatingActionButton addFab,createFab, listFab;
 
-    Boolean areFabsVisible;
-    androidx.appcompat.widget.Toolbar toolbar;
+    private Boolean areFabsVisible;
+    private androidx.appcompat.widget.Toolbar toolbar;
 
 
 
@@ -42,6 +37,7 @@ public class LandingPage extends AppCompatActivity{
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         initViewpager();
         initFABMenu();
 
@@ -85,6 +81,13 @@ public class LandingPage extends AppCompatActivity{
         });
         //todo hier die weiteren onclicklistener für die buttons
 
+        listFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LandingPage.this,RezeptUebersicht.class);
+                startActivity(intent);
+            }
+        });
     }
     private void initViewpager(){
         //todo bilder müssen auf bestimmte größe angepasst werden
@@ -102,10 +105,10 @@ public class LandingPage extends AppCompatActivity{
                 "Schnitzel",
                 "Steak"
         };
-        viewPagerItems = new ArrayList<>();
+        recipes = new ArrayList<>();
         for(int i=0;i< images.length;i++){
-            ViewPagerItem viewPagerItem = new ViewPagerItem(images[i],rezeptname[i], null );
-            viewPagerItems.add(viewPagerItem);
+            Recipe recipe = new Recipe(rezeptname[i],"",null); // todo int -> byte[]
+            recipes.add(recipe);
         }
 
 
@@ -125,7 +128,7 @@ public class LandingPage extends AppCompatActivity{
                 page.setScaleY(0.85f + r * 0.14f);
             }
         });
-        viewPager.setAdapter(new ViewPagerAdapter(this,viewPagerItems));
+        viewPager.setAdapter(new ViewPagerAdapter(this,recipes));
         viewPager.setPageTransformer(transformer);
 
     }

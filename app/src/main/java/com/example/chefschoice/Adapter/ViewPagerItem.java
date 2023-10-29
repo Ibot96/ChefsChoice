@@ -1,4 +1,4 @@
-package com.example.chefschoice;
+package com.example.chefschoice.Adapter;
 
 import java.util.List;
 
@@ -6,19 +6,19 @@ public class ViewPagerItem {
 
     int imageID;
     String rezeptName;
-    List<Zutaten> zutatenList;
+    /*List<Zutaten> zutatenList;
     public List<Zutaten> getZutatenList() {
         return zutatenList;
-    }
+    }*/
 
-    public void setZutatenList(List<Zutaten> zutatenList) {
+    /*public void setZutatenList(List<Zutaten> zutatenList) {
         this.zutatenList = zutatenList;
-    }
+    }*/
 
-    public ViewPagerItem(int imageID, String rezeptName, List<Zutaten> zutatenList) {
+    public ViewPagerItem(int imageID, String rezeptName /*List<Zutaten> zutatenList*/) {
         this.imageID = imageID;
         this.rezeptName = rezeptName;
-        this.zutatenList = zutatenList;
+        /*this.zutatenList = zutatenList;*/
     }
 
     public int getImageID() {
