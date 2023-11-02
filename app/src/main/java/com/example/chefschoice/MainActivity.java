@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         for (String ingredient : zutaten) {
             Ingredient neueZutat = new Ingredient(0, ingredient, nextID,0, null);
-            ingredientDAO.insertIngredient(neueZutat);
+            //ingredientDAO.insertIngredient(neueZutat, );
         }
     }
 
