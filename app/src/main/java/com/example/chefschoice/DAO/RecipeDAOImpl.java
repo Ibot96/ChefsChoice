@@ -36,7 +36,7 @@ public class RecipeDAOImpl implements RecipeDAO{
             while(cursor.moveToNext()){
                 String name = cursor.getString(cursor.getColumnIndexOrThrow("Name"));
                 String beschreibung = cursor.getString(cursor.getColumnIndexOrThrow("Beschreibung"));
-                byte[] bild = cursor.getBlob(cursor.getColumnIndexOrThrow("Bild"));
+                String bild = cursor.getString(cursor.getColumnIndexOrThrow("Bild"));
 
                 Recipe aktRezept = new Recipe(name,beschreibung,bild);
 

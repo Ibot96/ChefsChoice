@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS Rezepte ("
                 + "ID INTEGER PRIMARY KEY ,"
                 + "Name TEXT,"
-                + "Bild BLOB,"
+                + "Bild TEXT,"
                 + "Beschreibung TEXT);");
 
 

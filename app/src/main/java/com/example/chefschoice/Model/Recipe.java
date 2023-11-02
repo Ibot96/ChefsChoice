@@ -9,10 +9,10 @@ public class Recipe {
 
     private String beschreibung;
 
-    private byte[] bild;
+    private String bild;
 
 
-    public Recipe(String name, String beschreibung, byte[] bild) {
+    public Recipe(String name, String beschreibung, String bild) {
         this.name = name;
         this.bild = bild;
         this.beschreibung = beschreibung;
@@ -26,11 +26,11 @@ public class Recipe {
         this.name = name;
     }
 
-    public byte[] getBild() {
+    public String getBild() {
         return bild;
     }
 
-    public void setBild(byte[] bild) {
+    public void setBild(String bild) {
         this.bild = bild;
     }
 

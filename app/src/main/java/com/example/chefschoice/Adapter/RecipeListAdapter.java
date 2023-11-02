@@ -1,6 +1,12 @@
 package com.example.chefschoice.Adapter;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +16,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.chefschoice.Model.Recipe;
 import com.example.chefschoice.R;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class RecipeListAdapter extends ArrayAdapter<Recipe> {
@@ -30,7 +39,7 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         String name = getItem(position).getName();
-        byte[] bild = getItem(position).getBild();
+        String bild = getItem(position).getBild();
         String beschreibung = getItem(position).getBeschreibung();
 
         Recipe rezept = new Recipe(name,beschreibung, bild);
@@ -38,7 +47,28 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent,false);
 
-        ImageView bildView = (ImageView) convertView.findViewById(R.id.bild);
+
+        ImageView imageView =  (ImageView) convertView.findViewById(R.id.bild);
+        String imagePath = "/storage/emulated/0/Pictures/IMG_20231102_072525.jpg";
+
+
+
+        File imgFile = new File(imagePath);
+
+        if (imgFile.exists()) {
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+           if (myBitmap != null){
+               imageView.setImageBitmap(myBitmap);
+               Log.e("ddd", "gefunden");
+           }
+
+        } else {
+            Log.e("ddd", "File Not Found "+ imgFile);
+        }
+
+
+
         TextView nameView = (TextView)  convertView.findViewById(R.id.text);
 
         nameView.setText(name);
