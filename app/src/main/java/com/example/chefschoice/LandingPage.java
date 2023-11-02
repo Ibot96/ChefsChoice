@@ -12,13 +12,14 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.chefschoice.Adapter.ViewPagerAdapter;
+import com.example.chefschoice.DB.DatabaseHelper;
 import com.example.chefschoice.Model.Recipe;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 public class LandingPage extends AppCompatActivity{
-    private ArrayList<Recipe> recipes;
+    private ArrayList<Recipe> recipesWeek;
     private ViewPager2 viewPager;
 
     private FloatingActionButton menuFab;
@@ -26,6 +27,8 @@ public class LandingPage extends AppCompatActivity{
 
     private Boolean areFabsVisible;
     private androidx.appcompat.widget.Toolbar toolbar;
+
+    private DatabaseHelper databaseHelper;
 
 
 
@@ -40,6 +43,7 @@ public class LandingPage extends AppCompatActivity{
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         initViewpager();
         initFABMenu();
+        databaseHelper = new DatabaseHelper(this);
 
 
 
@@ -105,10 +109,10 @@ public class LandingPage extends AppCompatActivity{
                 "Schnitzel",
                 "Steak"
         };
-        recipes = new ArrayList<>();
+        recipesWeek = new ArrayList<>();
         for(int i=0;i< images.length;i++){
             Recipe recipe = new Recipe(rezeptname[i],"",null); // todo int -> byte[]
-            recipes.add(recipe);
+            recipesWeek.add(recipe);
         }
 
 
@@ -128,7 +132,7 @@ public class LandingPage extends AppCompatActivity{
                 page.setScaleY(0.85f + r * 0.14f);
             }
         });
-        viewPager.setAdapter(new ViewPagerAdapter(this,recipes));
+        viewPager.setAdapter(new ViewPagerAdapter(this,recipesWeek));
         viewPager.setPageTransformer(transformer);
 
     }
