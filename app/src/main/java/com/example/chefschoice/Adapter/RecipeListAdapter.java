@@ -49,25 +49,13 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
 
 
         ImageView imageView =  (ImageView) convertView.findViewById(R.id.bild);
-        String imagePath = "/storage/emulated/0/Pictures/IMG_20231102_072525.jpg";
+        Bitmap imgBitmap = getBitmapForView("/storage/emulated/0/Pictures/IMG_20231102_072525.jpg");
 
-
-
-        File imgFile = new File(imagePath);
-
-        if (imgFile.exists()) {
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-
-           if (myBitmap != null){
-               imageView.setImageBitmap(myBitmap);
-               Log.e("ddd", "gefunden");
-           }
-
-        } else {
-            Log.e("ddd", "File Not Found "+ imgFile);
-        }
-
-
+           if (imgBitmap != null){
+               imageView.setImageBitmap(imgBitmap);
+           }else {
+                Log.e("Err", "File Not Found");
+            }
 
         TextView nameView = (TextView)  convertView.findViewById(R.id.text);
 
@@ -75,4 +63,19 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
 
         return convertView;
     }
+
+    public Bitmap getBitmapForView(String path){
+        String imagePath = path;
+        Bitmap imgBitmap;
+
+
+        File imgFile = new File(imagePath);
+
+        if (imgFile.exists()) {
+           imgBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+        } else {
+            imgBitmap = null;
+        }
+            return  imgBitmap;
+        }
 }

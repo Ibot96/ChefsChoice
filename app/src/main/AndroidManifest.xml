@@ -33,6 +33,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RezeptUebersicht"></activity>
+        <activity android:name="Detailansicht"></activity>
     </application>
 
 </manifest>

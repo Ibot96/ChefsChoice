@@ -23,22 +23,39 @@ public class RecipeDAOImpl implements RecipeDAO{
     }
 
     @Override
-    public Recipe getRecipe(int id) {
+    public Recipe getRecipeById(int id) {
+        String[] selectionArgs = {String.valueOf(id)};
+        Cursor cursor = db.rawQuery("SELECT * FROM Rezepte WHERE id= ?",selectionArgs);
+        if(cursor != null){
+            if(cursor.moveToFirst()){
+                int recipeId = cursor.getInt(cursor.getColumnIndexOrThrow("ID"));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow("Name"));
+                String beschreibung = cursor.getString(cursor.getColumnIndexOrThrow("Beschreibung"));
+                String bild = cursor.getString(cursor.getColumnIndexOrThrow("Bild"));
+
+                Recipe aktRezept = new Recipe(recipeId,name,beschreibung,bild);
+                cursor.close();
+                return aktRezept;
+            }
+        }
+        cursor.close();
         return null;
     }
 
     @Override
     public ArrayList<Recipe> getAllRecipes() {
+
         Cursor cursor = db.rawQuery("SELECT * FROM Rezepte", null);
         ArrayList<Recipe> rezepte = new ArrayList<>();
         if(cursor != null){
 
             while(cursor.moveToNext()){
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("ID"));
                 String name = cursor.getString(cursor.getColumnIndexOrThrow("Name"));
                 String beschreibung = cursor.getString(cursor.getColumnIndexOrThrow("Beschreibung"));
                 String bild = cursor.getString(cursor.getColumnIndexOrThrow("Bild"));
 
-                Recipe aktRezept = new Recipe(name,beschreibung,bild);
+                Recipe aktRezept = new Recipe(id,name,beschreibung,bild);
 
                 rezepte.add(aktRezept);
             }
@@ -78,13 +95,6 @@ public class RecipeDAOImpl implements RecipeDAO{
         return nextId;
     }
 
-    public byte[] getImageAsByteArray(String path){
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
-        Bitmap bitmap = BitmapFactory.decodeFile(path);
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] image = stream.toByteArray();
-        return image;
-    }
 
 }

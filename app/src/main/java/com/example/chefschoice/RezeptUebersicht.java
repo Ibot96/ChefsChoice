@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -37,10 +39,8 @@ public class RezeptUebersicht extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rezept_uebersicht);
-        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-            Log.e("ddd", "Permission");
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-        }
+
+
         toolbar = (Toolbar) findViewById(R.id.toolbarUebersicht);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -59,6 +59,18 @@ public class RezeptUebersicht extends AppCompatActivity {
         RecipeListAdapter adapter = new RecipeListAdapter(this, R.layout.list_adapter, rezepte);
 
         liste.setAdapter(adapter);
+
+        liste.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Recipe seletedRecipe = (Recipe) liste.getItemAtPosition(position);
+                int recipeId = seletedRecipe.getId();
+
+                Intent intent = new Intent(RezeptUebersicht.this, Detailansicht.class);
+                intent.putExtra("selctedRecipe", recipeId);
+                startActivity(intent);
+            }
+        });
     }
     public boolean onOptionsItemSelected(MenuItem item){
         Intent myIntent = new Intent(getApplicationContext(), LandingPage.class);
