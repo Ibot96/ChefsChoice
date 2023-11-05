@@ -10,10 +10,9 @@ public class Ingredient {
 
     private String einheit;
 
-    public Ingredient(long id, String name, long recipeId, double menge, String einheit) {
-        this.id = id;
+    public Ingredient(String name, double menge, String einheit) {
         this.name = name;
-        this.recipeId = recipeId;
+        //this.recipeId = recipeId;
         this.menge = menge;
         this.einheit = einheit;
     }
@@ -58,4 +57,9 @@ public class Ingredient {
     public void setEinheit(String einheit) {
         this.einheit = einheit;
     }
+    public String toString(){
+        return name+", "+ String.valueOf(menge)+", "+einheit;
+    }
+
+
 }

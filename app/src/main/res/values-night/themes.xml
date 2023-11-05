@@ -1,12 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.ChefsChoice" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="Base.Theme.ChefsChoice" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <item name="colorPrimaryDark">@color/Primary_Color_Daynight_Dark</item>
         <item name="colorPrimary">@color/Primary_Color_Daynight</item>
-        <item name="android:background">@color/Primary_Color_Daynight_Dark</item>
         <item name="colorAccent">@color/Accent_Color_Dark</item>
-        <!--<item name="android:colorBackground">@color/Primary_Color_Daynight</item>-->
+        <item name="android:colorBackground">@color/Primary_Color_Daynight_Dark</item>
 
         <!--Text-->
         <item name="android:textColorPrimary">@color/Primary_Text</item>

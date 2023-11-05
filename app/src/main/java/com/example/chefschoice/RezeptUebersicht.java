@@ -42,11 +42,7 @@ public class RezeptUebersicht extends AppCompatActivity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         recipeDAO = new RecipeDAOImpl(db);
         rezepte = recipeDAO.getAllRecipes();
-
         liste = findViewById(R.id.liste);
-
-
-
         RecipeListAdapter adapter = new RecipeListAdapter(this, R.layout.list_adapter, rezepte);
 
         liste.setAdapter(adapter);

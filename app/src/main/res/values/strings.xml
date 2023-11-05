@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Chef´s Choice</string>
     <string name="genbutton">Generieren</string>
+    <string-array name="einheiten">
+        <item>ml</item>
+        <item>g</item>
+        <item>Stück</item>
+    </string-array>
+
 
 </resources>

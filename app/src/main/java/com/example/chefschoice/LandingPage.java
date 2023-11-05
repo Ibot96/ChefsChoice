@@ -85,12 +85,14 @@ public class LandingPage extends AppCompatActivity{
         });
         //todo hier die weiteren onclicklistener für die buttons
 
-        listFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LandingPage.this,RezeptUebersicht.class);
-                startActivity(intent);
-            }
+        listFab.setOnClickListener(v -> {
+            startActivity(new Intent(LandingPage.this,RezeptUebersicht.class));
+        });
+        addFab.setOnClickListener(v -> {
+            startActivity(new Intent(LandingPage.this, RezeptEingabe.class));
+        });
+        createFab.setOnClickListener(v -> {
+
         });
     }
     private void initViewpager(){
