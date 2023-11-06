@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -27,6 +29,7 @@ public class RezeptUebersicht extends AppCompatActivity {
 
     private ArrayList<Recipe> rezepte;
     private androidx.appcompat.widget.Toolbar toolbar;
+    private ImageButton zuRezepteingabe;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +40,11 @@ public class RezeptUebersicht extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        zuRezepteingabe= toolbar.findViewById(R.id.zuRezepteingabe);
+
+        zuRezepteingabe.setOnClickListener(view -> {
+            startActivity(new Intent(RezeptUebersicht.this, RezeptEingabe.class));
+        });
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -48,8 +56,7 @@ public class RezeptUebersicht extends AppCompatActivity {
         liste.setAdapter(adapter);
     }
     public boolean onOptionsItemSelected(MenuItem item){
-        Intent myIntent = new Intent(getApplicationContext(), LandingPage.class);
-        startActivityForResult(myIntent, 0);
+        finish();
         return true;
     }
 }

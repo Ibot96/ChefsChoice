@@ -143,8 +143,9 @@ public class RezeptEingabe extends AppCompatActivity {
         dropdown.setAdapter(spinnerAdapter);
     }
     public boolean onOptionsItemSelected(MenuItem item){
-        Intent myIntent = new Intent(getApplicationContext(), LandingPage.class);
-        startActivityForResult(myIntent, 0);
+        //Intent myIntent = new Intent(getApplicationContext(), LandingPage.class);
+        finish();
+        //startActivityForResult(myIntent, 0);
         return true;
     }
 

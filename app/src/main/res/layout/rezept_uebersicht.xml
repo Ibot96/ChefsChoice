@@ -14,7 +14,18 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        />
+        >
+
+        <ImageButton
+            android:id="@+id/zuRezepteingabe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add2_foreground"
+            android:layout_gravity="end"
+            android:backgroundTint="?attr/colorPrimaryDark"
+            android:layout_marginRight="10dp"
+            />
+    </androidx.appcompat.widget.Toolbar>
 
     <ListView
         android:id="@+id/liste"
