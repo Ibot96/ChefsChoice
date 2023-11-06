@@ -32,26 +32,26 @@ public class IngredientsListAdapter extends ArrayAdapter<Ingredient> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(int position, @Nullable View view, @NonNull ViewGroup parent) {
 
         Ingredient ingredient = getItem(position);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        convertView = inflater.inflate(mRessource, parent,false);
+        view = inflater.inflate(mRessource, parent,false);
 
-        TextView positionNumber = (TextView) convertView.findViewById(R.id.PositionIngriedentlist);
-        TextView zutatenName = (TextView)  convertView.findViewById(R.id.ingriedientName);
-        TextView menge = (TextView)  convertView.findViewById(R.id.ingriedientMenge);
-        TextView einheit2 = (TextView) convertView.findViewById(R.id.ingriedienteinheit);
+        TextView positionNumber = (TextView) view.findViewById(R.id.PositionIngriedentlist);
+        TextView zutatenName = (TextView)  view.findViewById(R.id.ingriedientName);
+        TextView menge = (TextView)  view.findViewById(R.id.ingriedientMenge);
+        TextView einheit2 = (TextView) view.findViewById(R.id.ingriedienteinheit);
 
         positionNumber.setText((position+1) + ". ");
         zutatenName.setText(ingredient.getName());
         menge.setText(removeTrailingZeros(ingredient.getMenge()));
         einheit2.setText(ingredient.getEinheit());
 
-        return convertView;
+        return view;
     }
-    private static String removeTrailingZeros(double d) {
+    public static String removeTrailingZeros(double d) {
         return String.valueOf(d).replaceAll("[0]*$", "").replaceAll(".$", "");
     }
 }

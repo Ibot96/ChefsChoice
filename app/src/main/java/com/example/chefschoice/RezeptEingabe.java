@@ -1,5 +1,7 @@
 package com.example.chefschoice;
 
+import static com.example.chefschoice.Adapter.IngredientsListAdapter.removeTrailingZeros;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,11 +9,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+
 import android.view.inputmethod.InputMethodManager;
+
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+
+import android.widget.LinearLayout;
 import android.widget.ListView;
+
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +31,7 @@ import com.example.chefschoice.DB.DatabaseHelper;
 import com.example.chefschoice.Model.Ingredient;
 import com.example.chefschoice.Model.Recipe;
 import com.google.android.material.textfield.TextInputEditText;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +51,7 @@ public class RezeptEingabe extends AppCompatActivity {
     private SQLiteDatabase db;
     private DatabaseHelper dbHelper;
     private ListView liste;
+    private IngredientsListAdapter ingredientsListAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,6 +96,11 @@ public class RezeptEingabe extends AppCompatActivity {
         add.setOnClickListener(v -> {
 
             if(inputZutatenName.getText().length()!=0) {
+                //hide keyboard nach add button on click
+                View view = getCurrentFocus();
+                InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
                 String name = inputZutatenName.getText().toString();
                 String mengeText = inputZutatenMenge.getText().toString();
                 Double menge = Double.valueOf(mengeText);
@@ -95,7 +109,7 @@ public class RezeptEingabe extends AppCompatActivity {
                 ingredientList.add(ingredient);
 
                 //anzeigen in der Liste
-                IngredientsListAdapter ingredientsListAdapter = new IngredientsListAdapter(this, R.layout.ingredients_list_item, ingredientList);
+                ingredientsListAdapter = new IngredientsListAdapter(this, R.layout.ingredients_list_item, ingredientList);
                 liste.setAdapter(ingredientsListAdapter);
 
                 //ausgeben der Liste
@@ -109,10 +123,11 @@ public class RezeptEingabe extends AppCompatActivity {
                 inputZutatenName.setText(null);
                 inputZutatenMenge.setText(null);
                 dropdown.setText(null);
-                //hide keyboard nach add button on click
-                View view = getCurrentFocus();
-                InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                //schließt die eingabefenster
+                findViewById(R.id.linearLayoutZutateneingabe).clearFocus();
+
+
+
             }else{
                 Log.d("chefchoice2", "no INPUT");
             }
@@ -134,6 +149,24 @@ public class RezeptEingabe extends AppCompatActivity {
             //intent auf die Hauptseite
             startActivity(new Intent(RezeptEingabe.this,LandingPage.class));
         });
+
+        liste.setOnItemClickListener((parent, view, position, id) -> {
+            Ingredient i = ingredientsListAdapter.getItem(position);
+            String name = ingredientsListAdapter.getItem(position).getName();
+            String menge = String.valueOf(ingredientsListAdapter.getItem(position).getMenge());
+            String einheit = ingredientsListAdapter.getItem(position).getEinheit();
+
+            inputZutatenName.setText(i.getName());
+            inputZutatenMenge.setText(removeTrailingZeros(i.getMenge()));
+            dropdown.setText(i.getEinheit());
+            dropdown.dismissDropDown();
+            fillDropdown();
+            ingredientList.remove(i);
+            ingredientsListAdapter.notifyDataSetChanged();
+
+
+            Log.d("chefchoice2", name +", "+menge+" "+einheit);
+        });
     }
 
 
@@ -143,12 +176,8 @@ public class RezeptEingabe extends AppCompatActivity {
         dropdown.setAdapter(spinnerAdapter);
     }
     public boolean onOptionsItemSelected(MenuItem item){
-        //Intent myIntent = new Intent(getApplicationContext(), LandingPage.class);
         finish();
-        //startActivityForResult(myIntent, 0);
         return true;
     }
-
-
 
 }

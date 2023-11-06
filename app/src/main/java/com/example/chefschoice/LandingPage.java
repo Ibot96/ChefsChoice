@@ -44,11 +44,6 @@ public class LandingPage extends AppCompatActivity{
         initViewpager();
         initFABMenu();
         databaseHelper = new DatabaseHelper(this);
-
-
-
-
-
     }
 
     private void initFABMenu(){
@@ -63,24 +58,21 @@ public class LandingPage extends AppCompatActivity{
         listFab.setVisibility(View.GONE);
         areFabsVisible = false;
 
-        menuFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!areFabsVisible){
-                    //show
-                    addFab.show();
-                    createFab.show();
-                    listFab.show();
+        menuFab.setOnClickListener(v -> {
+            if(!areFabsVisible){
+                //show
+                addFab.show();
+                createFab.show();
+                listFab.show();
 
-                    areFabsVisible = true;
-                }else{
-                    //hide
-                    addFab.hide();
-                    createFab.hide();
-                    listFab.hide();
+                areFabsVisible = true;
+            }else{
+                //hide
+                addFab.hide();
+                createFab.hide();
+                listFab.hide();
 
-                    areFabsVisible = false;
-                }
+                areFabsVisible = false;
             }
         });
         //todo hier die weiteren onclicklistener für die buttons
