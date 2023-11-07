@@ -8,7 +8,7 @@ public interface IngredientDAO {
 
     public long insertIngredient(Ingredient zutat);
 
-
+    public List<Ingredient> getIngrediantByRecipeId(long recipeId);
 
     public List<Ingredient> getIngrediantsById(int id);
 

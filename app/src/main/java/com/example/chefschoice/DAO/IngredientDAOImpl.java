@@ -63,4 +63,23 @@ public class IngredientDAOImpl implements IngredientDAO{
         return zutaten;
     }
 
+
+    @Override
+    public List<Ingredient> getIngrediantByRecipeId(long recipeId) {
+        List<Ingredient> zutaten = new ArrayList<>();
+        Cursor cs = db.query("Zutaten", null, "RezeptID=?", new String[]{String.valueOf(recipeId)}, null, null, null);
+        if(cs != null){
+            while(cs.moveToFirst()){
+                String name = cs.getString(cs.getColumnIndexOrThrow("Name"));
+                Double menge = cs.getDouble(cs.getColumnIndexOrThrow("Menge"));
+                String einheit = cs.getString(cs.getColumnIndexOrThrow("Einheit"));
+
+                Ingredient zutat = new Ingredient(name,menge,einheit);
+                zutaten.add(zutat);
+
+            }
+            cs.close();
+        }
+        return zutaten;
+    }
 }
