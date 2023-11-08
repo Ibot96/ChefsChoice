@@ -4,6 +4,8 @@ package com.example.chefschoice.DAO;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import com.example.chefschoice.Model.Ingredient;
 import com.example.chefschoice.Model.Recipe;
 
@@ -69,7 +71,8 @@ public class IngredientDAOImpl implements IngredientDAO{
         List<Ingredient> zutaten = new ArrayList<>();
         Cursor cs = db.query("Zutaten", null, "RezeptID=?", new String[]{String.valueOf(recipeId)}, null, null, null);
         if(cs != null){
-            while(cs.moveToFirst()){
+
+            while(cs.moveToNext()){
                 String name = cs.getString(cs.getColumnIndexOrThrow("Name"));
                 Double menge = cs.getDouble(cs.getColumnIndexOrThrow("Menge"));
                 String einheit = cs.getString(cs.getColumnIndexOrThrow("Einheit"));

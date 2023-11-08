@@ -15,8 +15,11 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:gravity="center_vertical"
-        android:textSize="18sp">
+        android:gravity="center"
+        android:textSize="24sp"
+        android:text="Test"
+        android:textColor="@color/black"
+       >
 
     </TextView>
 </LinearLayout>

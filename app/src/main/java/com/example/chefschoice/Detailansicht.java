@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -20,12 +21,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.chefschoice.Adapter.IngrediantListAdapter;
+import com.example.chefschoice.Adapter.RecipeListAdapter;
+import com.example.chefschoice.DAO.IngredientDAOImpl;
 import com.example.chefschoice.DAO.RecipeDAO;
 import com.example.chefschoice.DAO.RecipeDAOImpl;
 import com.example.chefschoice.DB.DatabaseHelper;
+import com.example.chefschoice.Model.Ingredient;
 import com.example.chefschoice.Model.Recipe;
 
 import java.io.File;
+import java.util.List;
 
 public class Detailansicht extends AppCompatActivity {
 
@@ -45,6 +51,7 @@ public class Detailansicht extends AppCompatActivity {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         RecipeDAOImpl recipeDAO = new RecipeDAOImpl(db);
+        IngredientDAOImpl ingredientDAO = new IngredientDAOImpl(db);
 
         txtName = findViewById(R.id.txtRezeptname);
         imView = findViewById(R.id.imViewGericht);
@@ -57,13 +64,29 @@ public class Detailansicht extends AppCompatActivity {
 
 
         int id = getIntent().getIntExtra("selctedRecipe", 0);
-        Recipe aktRezept = recipeDAO.getRecipeById(1);
+        Recipe aktRezept = recipeDAO.getRecipeById(id);
 
         String name = aktRezept.getName();
         String imgPath = aktRezept.getBild();
+        long rezeptId = aktRezept.getId();
         Log.e("Pfad", imgPath);
         txtName.setText(name);
         imView.setImageBitmap(getImageForView(imgPath));
+
+        ListView liste = findViewById(R.id.detailListe);
+
+        List<Ingredient> zutatenListe = ingredientDAO.getIngrediantByRecipeId(id);
+
+        IngrediantListAdapter adapter = new IngrediantListAdapter(this, zutatenListe);
+
+        liste.setAdapter(adapter);
+
+        TextView beschreibung = findViewById(R.id.rezeptBeschriebung);
+
+        String beschreibungsText = aktRezept.getBeschreibung();
+        Log.d("text", beschreibungsText);
+
+        beschreibung.setText(String.valueOf(beschreibungsText));
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
