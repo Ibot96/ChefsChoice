@@ -60,7 +60,6 @@
             android:divider="@null"
             android:dividerHeight="0dp"
             >
-
         </ListView>
 
         <TextView
