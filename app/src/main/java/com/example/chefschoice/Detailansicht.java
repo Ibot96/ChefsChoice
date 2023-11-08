@@ -69,9 +69,15 @@ public class Detailansicht extends AppCompatActivity {
         String name = aktRezept.getName();
         String imgPath = aktRezept.getBild();
         long rezeptId = aktRezept.getId();
-        Log.e("Pfad", imgPath);
+        //Log.e("Pfad", imgPath);
         txtName.setText(name);
-        imView.setImageBitmap(getImageForView(imgPath));
+
+        try {
+            imView.setImageBitmap(getImageForView(imgPath));
+
+        } catch (Exception e){
+            Log.d("chefchoice2", e.toString());
+        }
 
         ListView liste = findViewById(R.id.detailListe);
 
@@ -86,12 +92,11 @@ public class Detailansicht extends AppCompatActivity {
         String beschreibungsText = aktRezept.getBeschreibung();
         Log.d("text", beschreibungsText);
 
-        beschreibung.setText(String.valueOf(beschreibungsText));
+        beschreibung.setText(beschreibungsText);
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
-        Intent myIntent = new Intent(getApplicationContext(), RezeptUebersicht.class);
-        startActivityForResult(myIntent, 0);
+        finish();
         return true;
     }
 
