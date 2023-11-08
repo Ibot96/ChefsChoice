@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 String[] ingredientsArray =     ingredients.split(",");
                 long nextId = rezeptDAO.getNextRecipeId();
 
-                addIngredients(ingredientsArray, db, nextId);
+                //addIngredients(ingredientsArray, db, nextId);
                 Recipe rezept = new Recipe(recipeName,description, null);
 
                 rezeptDAO.addRecipe(rezept);
@@ -75,14 +75,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void addIngredients(String[] zutaten, SQLiteDatabase db, long nextID){
-        IngredientDAOImpl ingredientDAO = new IngredientDAOImpl(db);
 
-        for (String ingredient : zutaten) {
-            Ingredient neueZutat = new Ingredient(0, ingredient, nextID,0, null);
-            //ingredientDAO.insertIngredient(neueZutat, );
-        }
-    }
 
 
 }

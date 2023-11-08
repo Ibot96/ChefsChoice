@@ -34,6 +34,7 @@
         </activity>
         <activity android:name=".RezeptUebersicht"></activity>
         <activity android:name="Detailansicht"></activity>
+        <activity android:name=".RezeptEingabe"></activity>
     </application>
 
 </manifest>

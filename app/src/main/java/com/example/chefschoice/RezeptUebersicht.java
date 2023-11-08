@@ -1,8 +1,6 @@
 package com.example.chefschoice;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
@@ -34,18 +33,22 @@ public class RezeptUebersicht extends AppCompatActivity {
 
     private ArrayList<Recipe> rezepte;
     private androidx.appcompat.widget.Toolbar toolbar;
+    private ImageButton zuRezepteingabe;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rezept_uebersicht);
-
-
         toolbar = (Toolbar) findViewById(R.id.toolbarUebersicht);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        zuRezepteingabe= toolbar.findViewById(R.id.zuRezepteingabe);
+
+        zuRezepteingabe.setOnClickListener(view -> {
+            startActivity(new Intent(RezeptUebersicht.this, RezeptEingabe.class));
+        });
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -73,8 +76,7 @@ public class RezeptUebersicht extends AppCompatActivity {
         });
     }
     public boolean onOptionsItemSelected(MenuItem item){
-        Intent myIntent = new Intent(getApplicationContext(), LandingPage.class);
-        startActivityForResult(myIntent, 0);
+        finish();
         return true;
     }
 }
