@@ -20,9 +20,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("CREATE TABLE IF NOT EXISTS Rezepte ("
-                + "ID INTEGER PRIMARY KEY ,"
+                + "ID INTEGER PRIMARY KEY AUTOINCREMENT ,"
                 + "Name TEXT,"
-                + "Bild BLOB,"
+                + "Bild TEXT,"
                 + "Beschreibung TEXT);");
 
 

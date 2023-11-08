@@ -7,15 +7,19 @@
         android:id="@+id/bild"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/ic_launcher_background">
+        android:src="@drawable/ic_launcher_background"
+        android:scaleType="centerCrop">
     </ImageView>
 
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:gravity="center_vertical"
-        android:textSize="18sp">
+        android:gravity="center"
+        android:textSize="24sp"
+        android:text="Test"
+        android:textColor="@color/black"
+       >
 
     </TextView>
 </LinearLayout>
