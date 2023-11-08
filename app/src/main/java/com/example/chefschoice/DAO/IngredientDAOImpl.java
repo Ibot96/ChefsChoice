@@ -21,10 +21,10 @@ public class IngredientDAOImpl implements IngredientDAO{
     }
 
     @Override
-    public long insertIngredient(Ingredient zutat) {
+    public long insertIngredient(Ingredient zutat, long recipeID) {
         ContentValues values = new ContentValues();
         values.put("name", zutat.getName());
-        values.put("RezeptId", zutat.getRecipeId());
+        values.put("RezeptId", recipeID);
         long id = db.insert("Zutaten", null, values);
         zutat.setId(id);
         return id;

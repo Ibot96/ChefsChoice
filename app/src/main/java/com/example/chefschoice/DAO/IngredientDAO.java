@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IngredientDAO {
 
-    public long insertIngredient(Ingredient zutat);
+    public long insertIngredient(Ingredient zutat, long recipeID);
 
     public List<Ingredient> getIngrediantByRecipeId(long recipeId);
 
