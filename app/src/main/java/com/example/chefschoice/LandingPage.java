@@ -49,6 +49,10 @@ public class LandingPage extends AppCompatActivity{
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         initViewpager();
         initFABMenu();
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED){
+            Log.e("ddd", "Permission");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, 123);
+        }
         databaseHelper = new DatabaseHelper(this);
     }
 
