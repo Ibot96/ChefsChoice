@@ -40,8 +40,10 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         String name = getItem(position).getName();
         String bild = getItem(position).getBild();
+
         String beschreibung = getItem(position).getBeschreibung();
 
+        Log.d("Pfad",name + " " + bild);
         Recipe rezept = new Recipe(name,beschreibung, bild);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -49,13 +51,14 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
 
 
         ImageView imageView =  (ImageView) convertView.findViewById(R.id.bild);
-        Bitmap imgBitmap = getBitmapForView("/storage/emulated/0/Pictures/IMG_20231102_072525.jpg");
 
-           if (imgBitmap != null){
-               imageView.setImageBitmap(imgBitmap);
-           }else {
-                Log.e("Err", "File Not Found");
+        if(bild != null){
+            Bitmap imgBitmap = getBitmapForView(bild);
+            if(imgBitmap != null){
+                imageView.setImageBitmap(imgBitmap);
             }
+        }
+
 
         TextView nameView = (TextView)  convertView.findViewById(R.id.text);
 
@@ -69,7 +72,7 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
         Bitmap imgBitmap;
 
 
-        File imgFile = new File(imagePath);
+        File imgFile = new File("/storage/emulated/0/Android/data/com.example.chefschoice/files/Pictures/JPEG_17112023_100025_1659950482086434422.jpg");
 
         if (imgFile.exists()) {
            imgBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
