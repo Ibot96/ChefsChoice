@@ -49,11 +49,9 @@ public class LandingPage extends AppCompatActivity{
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         initViewpager();
         initFABMenu();
-        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED){
-            Log.e("ddd", "Permission");
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, 123);
-        }
+
         databaseHelper = new DatabaseHelper(this);
+        askPermission();
     }
 
     private void initFABMenu(){
@@ -154,13 +152,18 @@ public class LandingPage extends AppCompatActivity{
 
     private void askPermission(){
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED){
-            Log.e("ddd", "Permission");
+
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 123);
         }
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED){
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, 124);
+        }
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
             Log.e("ddd", "Permission");
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, 123);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 125);
         }
     }
 

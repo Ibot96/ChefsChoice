@@ -94,8 +94,15 @@ public class RezeptEingabe extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
-
+        if(data != null){
+            Uri uri = data.getData();
+            String file = removeUnwantedPrefix(uri.getPath());
+            Log.d("Galerie", "request" + String.valueOf(requestCode));
+            Log.d("Galerie", "result" + String.valueOf(resultCode));
+            Log.d("Galerie", "data" + String.valueOf(uri.getPath()));
+            Log.d("Galerie", "Path" + file);
+            imagePath = file;
+        }
     }
 
     private File getImageFile() throws IOException{
@@ -221,10 +228,10 @@ public class RezeptEingabe extends AppCompatActivity {
                 Log.d("Bild", "File: " +  photFile.getAbsolutePath());
                 fotoMachenIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
 
-                //Intent auswahl = Intent.createChooser(fotoAuswaehlenIntent, "Bild auswählen");
-                //auswahl.putExtra(Intent.EXTRA_ALTERNATE_INTENTS, new Intent[] {fotoMachenIntent});
+                Intent auswahl = Intent.createChooser(fotoAuswaehlenIntent, "Bild auswählen");
+                auswahl.putExtra(Intent.EXTRA_ALTERNATE_INTENTS, new Intent[] {fotoMachenIntent});
 
-                startActivityForResult(fotoMachenIntent, 1);
+                startActivityForResult(auswahl, 1);
             }
 
 
@@ -232,7 +239,6 @@ public class RezeptEingabe extends AppCompatActivity {
 
 
     }
-
 
 
 
@@ -244,6 +250,21 @@ public class RezeptEingabe extends AppCompatActivity {
         finish();
         return true;
     }
+
+    private String removeUnwantedPrefix(String uriString) {
+        // Der unerwünschte Präfix
+        String unwantedPrefix = "/-1/1/content:/";
+
+        // Überprüfe, ob der Präfix im Uri-String vorhanden ist
+        if (uriString.startsWith(unwantedPrefix)) {
+            // Entferne den Präfix
+            return uriString.substring(unwantedPrefix.length());
+        }
+
+        // Wenn der Präfix nicht gefunden wurde, gib den ursprünglichen String zurück
+        return uriString;
+    }
+
 
 
 
