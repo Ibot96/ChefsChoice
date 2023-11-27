@@ -68,7 +68,7 @@ public class RecipeDAOImpl implements RecipeDAO{
         ContentValues values = new ContentValues();
         values.put("name", rezept.getName());
         //byte[] image = getImageAsByteArray("C:\\Users\\JanLudwig\\OneDrive\\Desktop\\Pfannkuchen.png");
-        //values.put("bild", image);
+        values.put("bild", rezept.getBild());
         values.put("beschreibung", rezept.getBeschreibung());
 
         long newRow = db.insert("Rezepte", null, values);
