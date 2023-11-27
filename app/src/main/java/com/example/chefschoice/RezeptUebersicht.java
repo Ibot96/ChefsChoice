@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.chefschoice.Adapter.OnButtonClickListener;
 import com.example.chefschoice.Adapter.RecipeListAdapter;
 import com.example.chefschoice.DAO.RecipeDAO;
 import com.example.chefschoice.DAO.RecipeDAOImpl;
@@ -26,7 +27,7 @@ import com.example.chefschoice.Model.Recipe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RezeptUebersicht extends AppCompatActivity {
+public class RezeptUebersicht extends AppCompatActivity implements OnButtonClickListener {
 
     private ListView liste;
     private RecipeDAOImpl recipeDAO;
@@ -34,6 +35,7 @@ public class RezeptUebersicht extends AppCompatActivity {
     private ArrayList<Recipe> rezepte;
     private androidx.appcompat.widget.Toolbar toolbar;
     private ImageButton zuRezepteingabe;
+    private RecipeListAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,24 +61,34 @@ public class RezeptUebersicht extends AppCompatActivity {
 
 
 
-        RecipeListAdapter adapter = new RecipeListAdapter(this, R.layout.list_adapter, rezepte);
-
+        adapter = new RecipeListAdapter(this, R.layout.list_adapter, rezepte);
+        adapter.setOnButtonClickListener(this);
         liste.setAdapter(adapter);
 
-        liste.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Recipe seletedRecipe = (Recipe) liste.getItemAtPosition(position);
-                int recipeId = seletedRecipe.getId();
+        liste.setOnItemClickListener((parent, view, position, id) -> {
+            Recipe seletedRecipe = (Recipe) liste.getItemAtPosition(position);
+            int recipeId = seletedRecipe.getId();
 
-                Intent intent = new Intent(RezeptUebersicht.this, Detailansicht.class);
-                intent.putExtra("selctedRecipe", recipeId);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(RezeptUebersicht.this, Detailansicht.class);
+            intent.putExtra("selctedRecipe", recipeId);
+            startActivity(intent);
         });
+
     }
     public boolean onOptionsItemSelected(MenuItem item){
         finish();
         return true;
+    }
+
+    @Override
+    public void onEditButtonClick(int itemId) {
+        Intent intent = new Intent(RezeptUebersicht.this, RezeptEingabe.class);
+        intent.putExtra("id", itemId);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onDeleteButtonClick(int itemId) {
+        recipeDAO.deleteRecipe(itemId);
     }
 }

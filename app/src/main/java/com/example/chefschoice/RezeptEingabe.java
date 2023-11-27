@@ -53,6 +53,12 @@ public class RezeptEingabe extends AppCompatActivity {
     private ListView liste;
     private IngredientsListAdapter ingredientsListAdapter;
 
+    private Recipe editRecipe;
+
+    private List<Ingredient> editZutatenListe;
+
+    private boolean editFlag = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +81,20 @@ public class RezeptEingabe extends AppCompatActivity {
         initInputs();
         fillDropdown();
 
+        // Bearbeiten eines bereits vorhandenen rezeptes
+        Intent intent = getIntent();
+        if (intent.hasExtra("id")){
+            editFlag = true;
+            int id = intent.getIntExtra("id",0);
+            editRecipe = recipeDAO.getRecipeById(id);
+            //eintragen der Daten
+            inputRezeptname.setText(editRecipe.getName());
+            inputBeschreibung.setText(editRecipe.getBeschreibung());
+            //zuatenliste
+            editZutatenListe = ingredientDAO.getIngrediantByRecipeId(id);
+            showIngredientList(editZutatenListe);
+        }
+
 
     }
 
@@ -90,33 +110,27 @@ public class RezeptEingabe extends AppCompatActivity {
         liste = findViewById(R.id.Zutatenliste);
         ingredientList = new ArrayList<Ingredient>();
 
-
-
         //hinzufügen der Zutaten in die Liste des Rezeptes
         add.setOnClickListener(v -> {
-
             if(inputZutatenName.getText().length()!=0) {
                 //hide keyboard nach add button on click
                 View view = getCurrentFocus();
                 InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
+                if (manager.isActive(view)) {
+                    manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
                 String name = inputZutatenName.getText().toString();
                 String mengeText = inputZutatenMenge.getText().toString();
                 Double menge = Double.valueOf(mengeText);
                 String einheit = dropdown.getText().toString();
                 Ingredient ingredient = new Ingredient(name, menge, einheit);
-                ingredientList.add(ingredient);
-
-                //anzeigen in der Liste
-                ingredientsListAdapter = new IngredientsListAdapter(this, R.layout.ingredients_list_item, ingredientList);
-                liste.setAdapter(ingredientsListAdapter);
-
-                //ausgeben der Liste
-               /* for (Ingredient ingredientfor: ingredientList
-                     ) {
-                    Log.d("chefchoice2", ingredientfor.toString());
-                }*/
+                if (editFlag){
+                    editZutatenListe.add(ingredient);
+                    showIngredientList(editZutatenListe);
+                }else {
+                    ingredientList.add(ingredient);
+                    showIngredientList(ingredientList);
+                }
 
 
                 //eingabefelder leeren
@@ -125,50 +139,64 @@ public class RezeptEingabe extends AppCompatActivity {
                 dropdown.setText(null);
                 //schließt die eingabefenster
                 findViewById(R.id.linearLayoutZutateneingabe).clearFocus();
-
-
-
             }else{
                 Log.d("chefchoice2", "no INPUT");
             }
-
         });
         speichern.setOnClickListener(v -> {
-            //erstellen Rezept und in Datenbank eintragen
-            String name = inputRezeptname.getText().toString();
-            String beschreibung = inputBeschreibung.getText().toString();
-            //todo bild
-            Recipe recipe = new Recipe(name,beschreibung,null);
-            long numb = recipeDAO.addRecipe(recipe);
-            ingredientDAO.addIngredients(ingredientList,numb);
-            Log.d("chefchoice2", String.valueOf(numb));
-            //Intent auf die Rezeptliste
-            startActivity(new Intent(RezeptEingabe.this,LandingPage.class));
+
+
+                //erstellen Rezept und in Datenbank eintragen
+                String name = inputRezeptname.getText().toString();
+                String beschreibung = inputBeschreibung.getText().toString();
+                //todo bild
+
+                if (editFlag){
+                    //todo update funktion der db auf die id
+                }else {
+                    //speichern in db
+                    Recipe recipe = new Recipe(name,beschreibung,null);
+                    long numb = recipeDAO.addRecipe(recipe);
+                    ingredientDAO.addIngredients(ingredientList,numb);
+                }
+                //Log.d("chefchoice2", String.valueOf(numb));
+
+                //Intent auf die Rezeptliste
+                startActivity(new Intent(RezeptEingabe.this,RezeptUebersicht.class));
+
+
         });
         abbrechen.setOnClickListener(v -> {
-            //intent auf die Hauptseite
-            startActivity(new Intent(RezeptEingabe.this,LandingPage.class));
+            finish();
         });
 
         liste.setOnItemClickListener((parent, view, position, id) -> {
-            Ingredient i = ingredientsListAdapter.getItem(position);
-            String name = ingredientsListAdapter.getItem(position).getName();
-            String menge = String.valueOf(ingredientsListAdapter.getItem(position).getMenge());
-            String einheit = ingredientsListAdapter.getItem(position).getEinheit();
+                Ingredient i = ingredientsListAdapter.getItem(position);
+                String name = ingredientsListAdapter.getItem(position).getName();
+                String menge = String.valueOf(ingredientsListAdapter.getItem(position).getMenge());
+                String einheit = ingredientsListAdapter.getItem(position).getEinheit();
 
-            inputZutatenName.setText(i.getName());
-            inputZutatenMenge.setText(removeTrailingZeros(i.getMenge()));
-            dropdown.setText(i.getEinheit());
-            dropdown.dismissDropDown();
-            fillDropdown();
-            ingredientList.remove(i);
-            ingredientsListAdapter.notifyDataSetChanged();
+                inputZutatenName.setText(i.getName());
+                inputZutatenMenge.setText(removeTrailingZeros(i.getMenge()));
+                dropdown.setText(i.getEinheit());
+                dropdown.dismissDropDown();
+                fillDropdown();
+                if (editFlag){
+                    editZutatenListe.remove(i);
+                }else {
+                    ingredientList.remove(i);
+                }
+                ingredientsListAdapter.notifyDataSetChanged();
+                //Log.d("chefchoice2", name + ", " + menge + " " + einheit);
 
-
-            Log.d("chefchoice2", name +", "+menge+" "+einheit);
         });
     }
 
+    private void showIngredientList(List<Ingredient> list) {
+        //anzeigen in der Liste
+        ingredientsListAdapter = new IngredientsListAdapter(this, R.layout.ingredients_list_item, list);
+        liste.setAdapter(ingredientsListAdapter);
+    }
 
 
     void fillDropdown(){
@@ -179,5 +207,6 @@ public class RezeptEingabe extends AppCompatActivity {
         finish();
         return true;
     }
+
 
 }

@@ -1,7 +1,11 @@
 package com.example.chefschoice.Adapter;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,7 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,8 +25,10 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.chefschoice.Detailansicht;
 import com.example.chefschoice.Model.Recipe;
 import com.example.chefschoice.R;
+import com.example.chefschoice.RezeptEingabe;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,6 +37,11 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
 
     private static Context mContext;
     int mResource;
+    private OnButtonClickListener onButtonClickListener;
+
+    public void setOnButtonClickListener(OnButtonClickListener listener){
+        this.onButtonClickListener = listener;
+    }
     public RecipeListAdapter( Context context, int resource, ArrayList<Recipe> objects) {
         super(context, resource, objects);
         mContext = context;
@@ -42,13 +55,28 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
         String bild = getItem(position).getBild();
         String beschreibung = getItem(position).getBeschreibung();
 
-        Recipe rezept = new Recipe(name,beschreibung, bild);
-
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent,false);
 
+        ImageButton deleteButton = convertView.findViewById(R.id.deleteRecipe);
+        ImageButton editButton = convertView.findViewById(R.id.editRecipe);
 
-        ImageView imageView =  (ImageView) convertView.findViewById(R.id.bild);
+        editButton.setOnClickListener(v -> {
+            if (onButtonClickListener != null){
+                onButtonClickListener.onEditButtonClick(getItem(position).getId());
+            }
+        });
+        deleteButton.setOnClickListener(v -> {
+            if (onButtonClickListener != null){
+                onButtonClickListener.onDeleteButtonClick(getItem(position).getId());
+                remove(getItem(position));
+                notifyDataSetChanged();
+            }
+        });
+
+
+
+        ImageView imageView =  convertView.findViewById(R.id.bild);
         Bitmap imgBitmap = getBitmapForView("/storage/emulated/0/Pictures/IMG_20231102_072525.jpg");
 
            if (imgBitmap != null){
