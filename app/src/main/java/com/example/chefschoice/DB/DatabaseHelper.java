@@ -33,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "Name TEXT,"
                 + "Menge REAL,"
                 + "Einheit TEXT,"  +
-                "FOREIGN KEY (RezeptID) REFERENCES Rezepte(id) ON DELETE CASCADE);");
+                "FOREIGN KEY (RezeptID) REFERENCES Rezepte(ID) ON DELETE CASCADE);");
     }
 
     @Override
