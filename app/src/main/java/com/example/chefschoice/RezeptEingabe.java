@@ -95,9 +95,9 @@ public class RezeptEingabe extends AppCompatActivity {
 
         // Bearbeiten eines bereits vorhandenen rezeptes
         Intent intent = getIntent();
-        if (intent.hasExtra("id")) {
+        if (intent.hasExtra("id")){
             editFlag = true;
-            int id = intent.getIntExtra("id", 0);
+            int id = intent.getIntExtra("id",0);
             editRecipe = recipeDAO.getRecipeById(id);
             //eintragen der Daten
             inputRezeptname.setText(editRecipe.getName());
@@ -145,11 +145,8 @@ public class RezeptEingabe extends AppCompatActivity {
         liste = findViewById(R.id.Zutatenliste);
         ingredientList = new ArrayList<Ingredient>();
 
-
-
         //hinzufügen der Zutaten in die Liste des Rezeptes
         add.setOnClickListener(v -> {
-
             if(inputZutatenName.getText().length()!=0) {
                 //hide keyboard nach add button on click
                 View view = getCurrentFocus();
@@ -177,13 +174,9 @@ public class RezeptEingabe extends AppCompatActivity {
                 dropdown.setText(null);
                 //schließt die eingabefenster
                 findViewById(R.id.linearLayoutZutateneingabe).clearFocus();
-
-
-
             }else{
                 Log.d("chefchoice2", "no INPUT");
             }
-
         });
         speichern.setOnClickListener(v -> {
             //erstellen Rezept und in Datenbank eintragen
@@ -195,10 +188,9 @@ public class RezeptEingabe extends AppCompatActivity {
                     //todo update funktion der db auf die id
                 }else {
                     //speichern in db
-                    Recipe recipe = new Recipe(name,beschreibung,bild);
+                    Recipe recipe = new Recipe(name,beschreibung,null);
                     long numb = recipeDAO.addRecipe(recipe);
                     ingredientDAO.addIngredients(ingredientList,numb);
-
                 }
                 //Log.d("chefchoice2", String.valueOf(numb));
 
@@ -230,7 +222,6 @@ public class RezeptEingabe extends AppCompatActivity {
                 ingredientsListAdapter.notifyDataSetChanged();
                 //Log.d("chefchoice2", name + ", " + menge + " " + einheit);
 
-            Log.d("chefchoice2", name +", "+menge+" "+einheit);
         });
             inputBild.setOnClickListener(v -> {
                 Intent fotoMachenIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -263,6 +254,7 @@ public class RezeptEingabe extends AppCompatActivity {
         ingredientsListAdapter = new IngredientsListAdapter(this, R.layout.ingredients_list_item, list);
         liste.setAdapter(ingredientsListAdapter);
     }
+
 
     void fillDropdown(){
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, getResources().getStringArray(R.array.einheiten));
