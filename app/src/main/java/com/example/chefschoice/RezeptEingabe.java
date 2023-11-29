@@ -260,7 +260,7 @@ public class RezeptEingabe extends AppCompatActivity {
             // Entferne den Präfix
             return uriString.substring(unwantedPrefix.length());
         }
-
+        //Test
         // Wenn der Präfix nicht gefunden wurde, gib den ursprünglichen String zurück
         return uriString;
     }
