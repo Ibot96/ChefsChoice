@@ -30,6 +30,7 @@
             android:layout_gravity="end"
             android:backgroundTint="?attr/colorPrimaryDark"
             android:layout_marginRight="10dp"
+            android:contentDescription="addRecipe"
             />
     </androidx.appcompat.widget.Toolbar>
 

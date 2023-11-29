@@ -77,7 +77,8 @@ public class RecipeDAOImpl implements RecipeDAO{
 
     @Override
     public void deleteRecipe(int id) {
-
+        db.delete("Rezepte","ID"+"=?",new String[]{String.valueOf(id)});
+        db.delete("Zutaten", "RezeptID"+"=?",new String[]{String.valueOf(id)});
     }
 
     @Override
@@ -94,6 +95,7 @@ public class RecipeDAOImpl implements RecipeDAO{
         }
         return nextId;
     }
+
 
 
 

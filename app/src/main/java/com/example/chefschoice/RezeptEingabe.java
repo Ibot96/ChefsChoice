@@ -5,10 +5,7 @@ import static com.example.chefschoice.Adapter.IngredientsListAdapter.removeTrail
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -27,7 +23,6 @@ import android.widget.ListView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.FileProvider;
 
 import com.example.chefschoice.Adapter.IngredientsListAdapter;
 import com.example.chefschoice.DAO.IngredientDAOImpl;
@@ -38,13 +33,8 @@ import com.example.chefschoice.Model.Recipe;
 import com.google.android.material.textfield.TextInputEditText;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class RezeptEingabe extends AppCompatActivity {
 
@@ -53,10 +43,8 @@ public class RezeptEingabe extends AppCompatActivity {
 
     private TextInputEditText inputRezeptname, inputZutatenName, inputZutatenMenge, inputBeschreibung;
 
-    private ImageButton inputBild;
     private List<Ingredient> ingredientList;
 
-    private String imagePath;
     private Button add, speichern, abbrechen;
     private RecipeDAOImpl recipeDAO;
     private IngredientDAOImpl ingredientDAO;
@@ -64,6 +52,12 @@ public class RezeptEingabe extends AppCompatActivity {
     private DatabaseHelper dbHelper;
     private ListView liste;
     private IngredientsListAdapter ingredientsListAdapter;
+
+    private Recipe editRecipe;
+
+    private List<Ingredient> editZutatenListe;
+
+    private boolean editFlag = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,7 +69,7 @@ public class RezeptEingabe extends AppCompatActivity {
         db = dbHelper.getWritableDatabase();
         recipeDAO = new RecipeDAOImpl(db);
         ingredientDAO = new IngredientDAOImpl(db);
-        imagePath = null;
+
         //initialisieren der toolbar
         toolbar = (Toolbar) findViewById(R.id.rezepteingabetoolbar);
         setSupportActionBar(toolbar);
@@ -87,36 +81,25 @@ public class RezeptEingabe extends AppCompatActivity {
         initInputs();
         fillDropdown();
 
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(data != null){
-            Uri uri = data.getData();
-            String file = removeUnwantedPrefix(uri.getPath());
-            Log.d("Galerie", "request" + String.valueOf(requestCode));
-            Log.d("Galerie", "result" + String.valueOf(resultCode));
-            Log.d("Galerie", "data" + String.valueOf(uri.getPath()));
-            Log.d("Galerie", "Path" + file);
-            imagePath = file;
+        // Bearbeiten eines bereits vorhandenen rezeptes
+        Intent intent = getIntent();
+        if (intent.hasExtra("id")){
+            editFlag = true;
+            int id = intent.getIntExtra("id",0);
+            editRecipe = recipeDAO.getRecipeById(id);
+            //eintragen der Daten
+            inputRezeptname.setText(editRecipe.getName());
+            inputBeschreibung.setText(editRecipe.getBeschreibung());
+            //zuatenliste
+            editZutatenListe = ingredientDAO.getIngrediantByRecipeId(id);
+            showIngredientList(editZutatenListe);
         }
-    }
 
-    private File getImageFile() throws IOException{
-        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss", Locale.getDefault()).format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 
-        return image;
     }
 
     private void initInputs() {
         inputRezeptname = findViewById(R.id.inputRezeptname);
-        inputBild = findViewById(R.id.imageButton);
         inputZutatenName = findViewById(R.id.inputZutatenName);
         inputZutatenMenge = findViewById(R.id.inputZutatenMenge);
         inputBeschreibung = findViewById(R.id.inputBeschreibung);
@@ -127,33 +110,27 @@ public class RezeptEingabe extends AppCompatActivity {
         liste = findViewById(R.id.Zutatenliste);
         ingredientList = new ArrayList<Ingredient>();
 
-
-
         //hinzufügen der Zutaten in die Liste des Rezeptes
         add.setOnClickListener(v -> {
-
             if(inputZutatenName.getText().length()!=0) {
                 //hide keyboard nach add button on click
                 View view = getCurrentFocus();
                 InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
+                if (manager.isActive(view)) {
+                    manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
                 String name = inputZutatenName.getText().toString();
                 String mengeText = inputZutatenMenge.getText().toString();
                 Double menge = Double.valueOf(mengeText);
                 String einheit = dropdown.getText().toString();
                 Ingredient ingredient = new Ingredient(name, menge, einheit);
-                ingredientList.add(ingredient);
-
-                //anzeigen in der Liste
-                ingredientsListAdapter = new IngredientsListAdapter(this, R.layout.ingredients_list_item, ingredientList);
-                liste.setAdapter(ingredientsListAdapter);
-
-                //ausgeben der Liste
-               /* for (Ingredient ingredientfor: ingredientList
-                     ) {
-                    Log.d("chefchoice2", ingredientfor.toString());
-                }*/
+                if (editFlag){
+                    editZutatenListe.add(ingredient);
+                    showIngredientList(editZutatenListe);
+                }else {
+                    ingredientList.add(ingredient);
+                    showIngredientList(ingredientList);
+                }
 
 
                 //eingabefelder leeren
@@ -162,84 +139,64 @@ public class RezeptEingabe extends AppCompatActivity {
                 dropdown.setText(null);
                 //schließt die eingabefenster
                 findViewById(R.id.linearLayoutZutateneingabe).clearFocus();
-
-
-
             }else{
                 Log.d("chefchoice2", "no INPUT");
             }
-
         });
         speichern.setOnClickListener(v -> {
-            //erstellen Rezept und in Datenbank eintragen
-            String name = inputRezeptname.getText().toString();
-            String beschreibung = inputBeschreibung.getText().toString();
 
-            Recipe recipe = new Recipe(name,beschreibung,imagePath);
-            long numb = recipeDAO.addRecipe(recipe);
 
-            ingredientDAO.addIngredients(ingredientList,numb);
-            Log.d("chefchoice2", String.valueOf(numb));
-            //Intent auf die Rezeptliste
-            startActivity(new Intent(RezeptEingabe.this,LandingPage.class));
+                //erstellen Rezept und in Datenbank eintragen
+                String name = inputRezeptname.getText().toString();
+                String beschreibung = inputBeschreibung.getText().toString();
+                //todo bild
+
+                if (editFlag){
+                    //todo update funktion der db auf die id
+                }else {
+                    //speichern in db
+                    Recipe recipe = new Recipe(name,beschreibung,null);
+                    long numb = recipeDAO.addRecipe(recipe);
+                    ingredientDAO.addIngredients(ingredientList,numb);
+                }
+                //Log.d("chefchoice2", String.valueOf(numb));
+
+                //Intent auf die Rezeptliste
+                startActivity(new Intent(RezeptEingabe.this,RezeptUebersicht.class));
+
+
         });
         abbrechen.setOnClickListener(v -> {
-            //intent auf die Hauptseite
-            startActivity(new Intent(RezeptEingabe.this,LandingPage.class));
+            finish();
         });
 
         liste.setOnItemClickListener((parent, view, position, id) -> {
-            Ingredient i = ingredientsListAdapter.getItem(position);
-            String name = ingredientsListAdapter.getItem(position).getName();
-            String menge = String.valueOf(ingredientsListAdapter.getItem(position).getMenge());
-            String einheit = ingredientsListAdapter.getItem(position).getEinheit();
+                Ingredient i = ingredientsListAdapter.getItem(position);
+                String name = ingredientsListAdapter.getItem(position).getName();
+                String menge = String.valueOf(ingredientsListAdapter.getItem(position).getMenge());
+                String einheit = ingredientsListAdapter.getItem(position).getEinheit();
 
-            inputZutatenName.setText(i.getName());
-            inputZutatenMenge.setText(removeTrailingZeros(i.getMenge()));
-            dropdown.setText(i.getEinheit());
-            dropdown.dismissDropDown();
-            fillDropdown();
-            ingredientList.remove(i);
-            ingredientsListAdapter.notifyDataSetChanged();
-
-
-            Log.d("chefchoice2", name +", "+menge+" "+einheit);
-        });
-
-
-        inputBild.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent fotoMachenIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                Intent fotoAuswaehlenIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                File photFile = null;
-                Uri photoUri = null;
-                try {
-                    photFile = getImageFile();
-                    imagePath = photFile.getAbsolutePath();
-                    photFile.setReadable(true);
-                    photFile.setWritable(true);
-                    photoUri = FileProvider.getUriForFile(RezeptEingabe.this, "com.example.chefschoice.fileprovider", photFile);
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                inputZutatenName.setText(i.getName());
+                inputZutatenMenge.setText(removeTrailingZeros(i.getMenge()));
+                dropdown.setText(i.getEinheit());
+                dropdown.dismissDropDown();
+                fillDropdown();
+                if (editFlag){
+                    editZutatenListe.remove(i);
+                }else {
+                    ingredientList.remove(i);
                 }
-                Log.d("Bild", "Uri: " + photoUri.toString());
-                Log.d("Bild", "File: " +  photFile.getAbsolutePath());
-                fotoMachenIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-
-                Intent auswahl = Intent.createChooser(fotoAuswaehlenIntent, "Bild auswählen");
-                auswahl.putExtra(Intent.EXTRA_ALTERNATE_INTENTS, new Intent[] {fotoMachenIntent});
-
-                startActivityForResult(auswahl, 1);
-            }
-
+                ingredientsListAdapter.notifyDataSetChanged();
+                //Log.d("chefchoice2", name + ", " + menge + " " + einheit);
 
         });
-
-
     }
 
+    private void showIngredientList(List<Ingredient> list) {
+        //anzeigen in der Liste
+        ingredientsListAdapter = new IngredientsListAdapter(this, R.layout.ingredients_list_item, list);
+        liste.setAdapter(ingredientsListAdapter);
+    }
 
 
     void fillDropdown(){

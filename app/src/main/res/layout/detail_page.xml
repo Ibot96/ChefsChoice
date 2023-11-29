@@ -20,7 +20,30 @@
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            >
+            <ImageButton
+            android:id="@+id/deleteRecipedetail"
+            android:src="@drawable/deleteicon"
+            android:backgroundTint="?attr/colorPrimaryDark"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end"
+            android:layout_marginRight="10dp"
+            android:contentDescription="editButton"
             />
+            <ImageButton
+                android:id="@+id/editRecipedetail"
+                android:src="@drawable/edit_icon_foreground"
+                android:backgroundTint="?attr/colorPrimaryDark"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="end"
+                android:layout_marginRight="10dp"
+                android:contentDescription="editButton"
+
+                />
+
+        </androidx.appcompat.widget.Toolbar>
 
         <TextView
             android:id="@+id/txtRezeptname"
@@ -37,7 +60,7 @@
             android:id="@+id/imViewGericht"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:src="@drawable/schnitzel"
+            android:src="@drawable/kameraplatzhalter"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
             android:layout_margin="10dp"

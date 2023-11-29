@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +43,10 @@ public class Detailansicht extends AppCompatActivity {
     private TextView txtName;
 
     private ImageView imView;
+    private Recipe aktRezept;
+    private List<Ingredient> zutatenListe;
+
+    private ImageButton editButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,7 +70,7 @@ public class Detailansicht extends AppCompatActivity {
 
 
         int id = getIntent().getIntExtra("selctedRecipe", 0);
-        Recipe aktRezept = recipeDAO.getRecipeById(id);
+        aktRezept = recipeDAO.getRecipeById(id);
 
         String name = aktRezept.getName();
         String imgPath = aktRezept.getBild();
@@ -81,7 +87,7 @@ public class Detailansicht extends AppCompatActivity {
 
         ListView liste = findViewById(R.id.detailListe);
 
-        List<Ingredient> zutatenListe = ingredientDAO.getIngrediantByRecipeId(id);
+        zutatenListe = ingredientDAO.getIngrediantByRecipeId(id);
 
         IngrediantListAdapter adapter = new IngrediantListAdapter(this, zutatenListe);
 
@@ -93,6 +99,12 @@ public class Detailansicht extends AppCompatActivity {
         Log.d("text", beschreibungsText);
 
         beschreibung.setText(beschreibungsText);
+        editButton = findViewById(R.id.editRecipedetail);
+        editButton.setOnClickListener(v -> {
+            Intent i = new Intent(Detailansicht.this,RezeptEingabe.class);
+            i.putExtra("id",aktRezept.getId());
+            startActivity(i);
+        });
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
