@@ -75,9 +75,8 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
         });
 
 
-
         ImageView imageView =  convertView.findViewById(R.id.bild);
-        Bitmap imgBitmap = getBitmapForView("/storage/emulated/0/Pictures/IMG_20231102_072525.jpg");
+        Bitmap imgBitmap = getBitmapForView(bild);
 
            if (imgBitmap != null){
                imageView.setImageBitmap(imgBitmap);
