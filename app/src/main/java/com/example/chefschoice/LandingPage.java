@@ -11,9 +11,12 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.Manifest;
 import androidx.core.app.ActivityCompat;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 
@@ -23,6 +26,7 @@ import com.example.chefschoice.Model.Recipe;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LandingPage extends AppCompatActivity{
     private ArrayList<Recipe> recipesWeek;
@@ -36,7 +40,9 @@ public class LandingPage extends AppCompatActivity{
 
     private DatabaseHelper databaseHelper;
 
+    private List<Integer> currentWeekIDs;
 
+    private SharedPreferences preferences;
 
 
     @Override
@@ -47,6 +53,9 @@ public class LandingPage extends AppCompatActivity{
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        currentWeekIDs = new ArrayList<>();
+        preferences = getSharedPreferences("Current_Recipes", Context.MODE_PRIVATE);
         initViewpager();
         initFABMenu();
 
@@ -83,7 +92,6 @@ public class LandingPage extends AppCompatActivity{
                 areFabsVisible = false;
             }
         });
-        //todo hier die weiteren onclicklistener für die buttons
 
         listFab.setOnClickListener(v -> {
             startActivity(new Intent(LandingPage.this,RezeptUebersicht.class));
