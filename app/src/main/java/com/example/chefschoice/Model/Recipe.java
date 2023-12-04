@@ -57,4 +57,14 @@ public class Recipe {
     public void setBeschreibung(String beschreibung) {
         this.beschreibung = beschreibung;
     }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", beschreibung='" + beschreibung + '\'' +
+                ", bild='" + bild + '\'' +
+                '}';
+    }
 }

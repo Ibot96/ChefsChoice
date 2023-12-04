@@ -75,14 +75,14 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
         });
 
 
-        ImageView imageView =  convertView.findViewById(R.id.bild);
+        /*ImageView imageView =  convertView.findViewById(R.id.bild);
         Bitmap imgBitmap = getBitmapForView(bild);
 
            if (imgBitmap != null){
                imageView.setImageBitmap(imgBitmap);
            }else {
                 Log.e("Err", "File Not Found");
-            }
+            }*/
 
         TextView nameView = (TextView)  convertView.findViewById(R.id.text);
 
@@ -91,7 +91,7 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
         return convertView;
     }
 
-    public Bitmap getBitmapForView(String path){
+    /*public Bitmap getBitmapForView(String path){
         String imagePath = path;
         Bitmap imgBitmap;
 
@@ -104,5 +104,5 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
             imgBitmap = null;
         }
             return  imgBitmap;
-        }
+        }*/
 }

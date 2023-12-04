@@ -5,6 +5,8 @@ import static com.example.chefschoice.Adapter.IngredientsListAdapter.removeTrail
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,6 +22,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -53,7 +56,7 @@ public class RezeptEingabe extends AppCompatActivity {
 
     private TextInputEditText inputRezeptname, inputZutatenName, inputZutatenMenge, inputBeschreibung;
 
-    private ImageButton inputBild;
+    private ImageView inputBild;
     private List<Ingredient> ingredientList;
 
     private String imagePath;
@@ -67,7 +70,6 @@ public class RezeptEingabe extends AppCompatActivity {
 
     private Recipe editRecipe;
 
-    private List<Ingredient> editZutatenListe;
 
     private boolean editFlag = false;
 
@@ -103,8 +105,8 @@ public class RezeptEingabe extends AppCompatActivity {
             inputRezeptname.setText(editRecipe.getName());
             inputBeschreibung.setText(editRecipe.getBeschreibung());
             //zuatenliste
-            editZutatenListe = ingredientDAO.getIngrediantByRecipeId(id);
-            showIngredientList(editZutatenListe);
+            ingredientList = ingredientDAO.getIngrediantByRecipeId(id);
+            showIngredientList(ingredientList);
         }
     }
 
@@ -115,9 +117,9 @@ public class RezeptEingabe extends AppCompatActivity {
         if(data != null){
             Uri uri = data.getData();
             String file = removeUnwantedPrefix(uri.getPath());
-            Log.d("Galerie", "request" + String.valueOf(requestCode));
-            Log.d("Galerie", "result" + String.valueOf(resultCode));
-            Log.d("Galerie", "data" + String.valueOf(uri.getPath()));
+            Log.d("Galerie", "request" + requestCode);
+            Log.d("Galerie", "result" + resultCode);
+            Log.d("Galerie", "data" + uri.getPath());
             Log.d("Galerie", "Path" + file);
             imagePath = file;
         }
@@ -159,13 +161,8 @@ public class RezeptEingabe extends AppCompatActivity {
                 Double menge = Double.valueOf(mengeText);
                 String einheit = dropdown.getText().toString();
                 Ingredient ingredient = new Ingredient(name, menge, einheit);
-                if (editFlag){
-                    editZutatenListe.add(ingredient);
-                    showIngredientList(editZutatenListe);
-                }else {
-                    ingredientList.add(ingredient);
-                    showIngredientList(ingredientList);
-                }
+                ingredientList.add(ingredient);
+                showIngredientList(ingredientList);
 
 
                 //eingabefelder leeren
@@ -185,12 +182,19 @@ public class RezeptEingabe extends AppCompatActivity {
             String bild = imagePath;
 
                 if (editFlag){
-                    //todo update funktion der db auf die id
+                    //todo update funktion für das bild
+
+                    editRecipe.setBeschreibung(beschreibung);
+                    editRecipe.setBild(bild);
+                    editRecipe.setName(name);
+
+                    ingredientDAO.updateIngredients(ingredientList, editRecipe.getId());
+                    recipeDAO.updateRecipe(editRecipe);
                 }else {
                     //speichern in db
-                    Recipe recipe = new Recipe(name,beschreibung,null);
-                    long numb = recipeDAO.addRecipe(recipe);
-                    ingredientDAO.addIngredients(ingredientList,numb);
+                    Recipe recipe = new Recipe(name,beschreibung,bild);
+                    long recipeID = recipeDAO.addRecipe(recipe);
+                    ingredientDAO.addIngredients(ingredientList,recipeID);
                 }
                 //Log.d("chefchoice2", String.valueOf(numb));
 
@@ -214,16 +218,13 @@ public class RezeptEingabe extends AppCompatActivity {
                 dropdown.setText(i.getEinheit());
                 dropdown.dismissDropDown();
                 fillDropdown();
-                if (editFlag){
-                    editZutatenListe.remove(i);
-                }else {
-                    ingredientList.remove(i);
-                }
+                ingredientList.remove(i);
+
                 ingredientsListAdapter.notifyDataSetChanged();
                 //Log.d("chefchoice2", name + ", " + menge + " " + einheit);
 
         });
-            inputBild.setOnClickListener(v -> {
+        inputBild.setOnClickListener(v -> {
                 Intent fotoMachenIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 Intent fotoAuswaehlenIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 File photFile = null;
@@ -234,36 +235,33 @@ public class RezeptEingabe extends AppCompatActivity {
                     photFile.setReadable(true);
                     photFile.setWritable(true);
                     photoUri = FileProvider.getUriForFile(RezeptEingabe.this, "com.example.chefschoice.fileprovider", photFile);
-
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
                 Log.d("Bild", "Uri: " + photoUri.toString());
                 Log.d("Bild", "File: " +  photFile.getAbsolutePath());
                 fotoMachenIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-
+                Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+                inputBild.setImageBitmap(bitmap);
                 Intent auswahl = Intent.createChooser(fotoAuswaehlenIntent, "Bild auswählen");
                 auswahl.putExtra(Intent.EXTRA_ALTERNATE_INTENTS, new Intent[] {fotoMachenIntent});
 
                 startActivityForResult(auswahl, 1);
-            });
+        });
     }
-
+    //anzeigen der übergebenen Liste
     private void showIngredientList(List<Ingredient> list) {
         //anzeigen in der Liste
         ingredientsListAdapter = new IngredientsListAdapter(this, R.layout.ingredients_list_item, list);
         liste.setAdapter(ingredientsListAdapter);
     }
 
-
+    //fühlt die Einheitenliste
     void fillDropdown(){
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, getResources().getStringArray(R.array.einheiten));
         dropdown.setAdapter(spinnerAdapter);
     }
-    public boolean onOptionsItemSelected(MenuItem item){
-        finish();
-        return true;
-    }
+
 
     private String removeUnwantedPrefix(String uriString) {
         // Der unerwünschte Präfix
@@ -274,12 +272,15 @@ public class RezeptEingabe extends AppCompatActivity {
             // Entferne den Präfix
             return uriString.substring(unwantedPrefix.length());
         }
-
         // Wenn der Präfix nicht gefunden wurde, gib den ursprünglichen String zurück
         return uriString;
     }
 
-
+    //zurückbutton der Toolbar geht immer zur zuletzt geöffneten seite
+    public boolean onOptionsItemSelected(MenuItem item){
+        finish();
+        return true;
+    }
 
 
 }

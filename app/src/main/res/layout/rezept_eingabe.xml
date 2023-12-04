@@ -21,6 +21,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+        <ImageView
+            android:id="@+id/imageButton"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:src="@drawable/kameraplatzhalter"
+            android:layout_marginBottom="20dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            />
+
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="358dp"
@@ -42,7 +52,7 @@
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
+        <!--<LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,7 +80,7 @@
                 app:srcCompat="@drawable/ic_action_add" />
 
 
-        </LinearLayout>
+        </LinearLayout>-->
 
         <TextView
             android:layout_width="wrap_content"

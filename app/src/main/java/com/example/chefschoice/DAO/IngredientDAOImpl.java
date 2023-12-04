@@ -85,13 +85,31 @@ public class IngredientDAOImpl implements IngredientDAO{
         }
         return zutaten;
     }
-    public void addIngredients(List<Ingredient> zutaten, long nextID){
+    public void addIngredients(List<Ingredient> zutaten, long recipeID){
         //IngredientDAOImpl ingredientDAO = new IngredientDAOImpl(db);
 
         for (Ingredient ingredient : zutaten) {
             //Ingredient neueZutat = new Ingredient(ingredient.getName(), nextID,ingredient.getMenge(), ingredient.getEinheit());
-            ingredient.setRecipeId(nextID);
+            ingredient.setRecipeId(recipeID);
             insertIngredient(ingredient);
         }
+    }
+
+    @Override
+    public void updateIngredients(List<Ingredient> zutaten, long recipeID) {
+
+        db.delete("Zutaten", "RezeptID"+"=?",new String[]{String.valueOf(recipeID)});
+        addIngredients(zutaten, recipeID);
+
+        /*for (Ingredient i : zutaten) {
+            ContentValues values = new ContentValues();
+            values.put("Name", i.getName());
+            values.put("Menge", i.getMenge());
+            values.put("Einheit", i.getEinheit());
+
+            db.update("Zutaten", values, "ID = ?", new String[]{String.valueOf(i.getId())});
+        }
+        db.close();
+        */
     }
 }
