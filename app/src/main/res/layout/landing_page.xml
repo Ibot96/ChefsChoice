@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LandingPage">
+    tools:context=".LandingPage"
+    android:id="@+id/landingPage">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -22,8 +23,8 @@
             android:scaleX="1.5"
             android:scaleY="1.5"
             android:src="@mipmap/ic_launcher"
-            android:layout_gravity="left"
-            android:layout_marginLeft="25dp"
+            android:layout_gravity="start"
+            android:layout_marginStart="25dp"
             />
         <TextView
             android:layout_width="wrap_content"

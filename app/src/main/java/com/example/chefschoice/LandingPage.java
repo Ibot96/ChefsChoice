@@ -1,6 +1,5 @@
 package com.example.chefschoice;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -9,40 +8,45 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 import android.Manifest;
-import androidx.core.app.ActivityCompat;
-
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import java.util.Map;
+import java.util.Random;
 import android.util.Log;
 import android.view.View;
-
+import android.view.Window;
+import android.widget.Button;
+import android.widget.Toast;
 import com.example.chefschoice.Adapter.ViewPagerAdapter;
+import com.example.chefschoice.DAO.RecipeDAOImpl;
 import com.example.chefschoice.DB.DatabaseHelper;
 import com.example.chefschoice.Model.Recipe;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
+import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LandingPage extends AppCompatActivity{
-    private ArrayList<Recipe> recipesWeek;
+    private List<Recipe> recipesWeek;
+    private List<Recipe> allRecipes;
+    private SharedPreferences preferences;
+    private List<Integer> currentWeekIDs;
     private ViewPager2 viewPager;
-
     private FloatingActionButton menuFab;
     private FloatingActionButton addFab,createFab, listFab;
-
     private Boolean areFabsVisible;
     private androidx.appcompat.widget.Toolbar toolbar;
-
     private DatabaseHelper databaseHelper;
+    private SQLiteDatabase db;
+    private RecipeDAOImpl recipeDAO;
+    private Dialog dialog;
+    private TextInputEditText inputDays;
 
-    private List<Integer> currentWeekIDs;
-
-    private SharedPreferences preferences;
 
 
     @Override
@@ -53,16 +57,66 @@ public class LandingPage extends AppCompatActivity{
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        askPermission();
 
-        currentWeekIDs = new ArrayList<>();
-        preferences = getSharedPreferences("Current_Recipes", Context.MODE_PRIVATE);
+        //database initialisieren und alle rezepte holen
+        databaseHelper = new DatabaseHelper(this);
+        db = databaseHelper.getWritableDatabase();
+        recipeDAO = new RecipeDAOImpl(db);
+        allRecipes = recipeDAO.getAllRecipes();
+
+        //initialisierung von allen objekten (viewpager, Bedienmenu, Popupdialog)
         initViewpager();
         initFABMenu();
+        initDialog();
 
-        databaseHelper = new DatabaseHelper(this);
-        askPermission();
+        //sharedpreferences abfragen
+        preferences = getSharedPreferences("Current_Recipes", Context.MODE_PRIVATE);
+        Map<String, ?> allPrefs = preferences.getAll();
+
+
+        if (!allPrefs.isEmpty()){
+            Log.d("Preferences","in");
+            for (Map.Entry<String, ?> entry : allPrefs.entrySet()) {
+                if (entry.getValue() instanceof Integer) {
+                    currentWeekIDs.add((Integer) entry.getValue());
+                    recipesWeek.add(recipeDAO.getRecipeById((Integer) entry.getValue()));
+                }
+            }
+
+            showViewpager();
+        }
+
     }
 
+    private void initDialog() {
+        dialog= new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.genpopup);
+        dialog.setCanceledOnTouchOutside(false);
+
+        Button genButton = dialog.findViewById(R.id.generierenPopUp);
+        Button cancelButton = dialog.findViewById(R.id.abbrechenPopUp);
+        inputDays = dialog.findViewById(R.id.inputTage);
+
+        genButton.setOnClickListener(v -> {
+            genRecipes();
+            if (!inputDays.getText().toString().equals("")){
+                dialog.dismiss();
+            }
+            if (viewPager!=null&&!dialog.isShowing()){
+                viewPager.setVisibility(View.VISIBLE);
+            }
+            showViewpager();
+
+        });
+        cancelButton.setOnClickListener(v -> {
+            dialog.dismiss();
+            if (viewPager!=null){
+                viewPager.setVisibility(View.VISIBLE);
+            }
+        });
+    }
     private void initFABMenu(){
         addFab = (FloatingActionButton) findViewById(R.id.menu_add);
         createFab = (FloatingActionButton) findViewById(R.id.menu_create);
@@ -76,23 +130,8 @@ public class LandingPage extends AppCompatActivity{
         areFabsVisible = false;
 
         menuFab.setOnClickListener(v -> {
-            if(!areFabsVisible){
-                //show
-                addFab.show();
-                createFab.show();
-                listFab.show();
-
-                areFabsVisible = true;
-            }else{
-                //hide
-                addFab.hide();
-                createFab.hide();
-                listFab.hide();
-
-                areFabsVisible = false;
-            }
+            toggleFABMenu();
         });
-
         listFab.setOnClickListener(v -> {
             startActivity(new Intent(LandingPage.this,RezeptUebersicht.class));
         });
@@ -100,59 +139,109 @@ public class LandingPage extends AppCompatActivity{
             startActivity(new Intent(LandingPage.this, RezeptEingabe.class));
         });
         createFab.setOnClickListener(v -> {
-
+            if (currentWeekIDs.size()!=0){
+                viewPager.setVisibility(View.INVISIBLE);
+            }
+            inputDays.setText("");
+            dialog.show();
+            toggleFABMenu();
         });
+
     }
-    private void initViewpager(){
-        //todo bilder müssen auf bestimmte größe angepasst werden
-        viewPager = findViewById(R.id.ViewPager);
-        int[] images = {
-                R.drawable.saumagen,
-                R.drawable.kartoffelsalat,
-                R.drawable.schnitzel,
-                R.drawable.steak
-        };
 
-        String[] rezeptname = {
-                "Saumagen",
-                "Kartoffelsalat",
-                "Schnitzel",
-                "Steak"
-        };
-        recipesWeek = new ArrayList<>();
-        for(int i=0;i< images.length;i++){
-            Recipe recipe = new Recipe(rezeptname[i],"",null); // todo int -> byte[]
-            recipesWeek.add(recipe);
+    private void toggleFABMenu() {
+        if(!areFabsVisible){
+            //show
+            addFab.show();
+            createFab.show();
+            listFab.show();
+
+            areFabsVisible = true;
+        }else{
+            //hide
+            addFab.hide();
+            createFab.hide();
+            listFab.hide();
+
+            areFabsVisible = false;
         }
+    }
 
-
+    private void initViewpager(){
+        //todo
+        // 1. bilder müssen auf bestimmte größe angepasst werden
+        // 2. es wird immer nur eine seite geladen
+        currentWeekIDs = new ArrayList<>();
+        recipesWeek = new ArrayList<>();
+        viewPager = new ViewPager2(this);
+        viewPager = findViewById(R.id.ViewPager);
         viewPager.setClipToPadding(false);
         viewPager.setPadding(100,0,120,0);
         viewPager.setClipChildren(false);
-        viewPager.setOffscreenPageLimit(2);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
 
+    }
+    private void genRecipes() {
+        String daysString = inputDays.getText().toString();
+        SharedPreferences.Editor myEditor = preferences.edit();;
+        myEditor.clear();
 
+        if (!daysString.equals("")){
+            int days = Integer.parseInt(daysString);
+            currentWeekIDs = getRandomElements(allRecipes, days);
+        }
+
+        if(currentWeekIDs!=null){
+            for (int i=0;i<currentWeekIDs.size();i++){
+                myEditor.putInt("ID"+i,currentWeekIDs.get(i));
+            }
+        }
+        myEditor.commit();
+
+    }
+    private List<Integer> getRandomElements(List<Recipe> recipes, int days ){
+        List<Recipe> tmpRecipes = new ArrayList<>(recipes);
+        List<Integer> tmpIDList = new ArrayList<>();
+        if (days == 0){
+            Toast toast = new Toast(this);
+            toast.setText("Mindestens 1 eingeben");
+            toast.show();
+            return null;
+        }
+        if (days > recipes.size()) {
+            Toast toast = new Toast(this);
+            toast.setText("Nicht genügend Rezepte");
+            toast.show();
+            return null;
+        }
+
+        Random random = new Random();
+        recipesWeek.clear();
+        for (int i = 0; i < days; i++) {
+            int randomIndex = random.nextInt(tmpRecipes.size());
+            recipesWeek.add(tmpRecipes.get(randomIndex));
+            tmpIDList.add(tmpRecipes.get(randomIndex).getId());
+            tmpRecipes.remove(randomIndex);
+        }
+
+        return tmpIDList;
+    }
+    private void showViewpager() {
         CompositePageTransformer transformer = new CompositePageTransformer();
         transformer.addTransformer(new MarginPageTransformer(40));
-        transformer.addTransformer(new ViewPager2.PageTransformer() {
-            @Override
-            public void transformPage(@NonNull View page, float position) {
-                float r= 1- Math.abs(position);
-                page.setScaleY(0.85f + r * 0.14f);
-            }
+        transformer.addTransformer((page, position) -> {
+            float r= 1- Math.abs(position);
+            page.setScaleY(0.85f + r * 0.14f);
         });
+        for (Recipe r: recipesWeek) {
+            Log.d("viewpager", r.getName());
+        }
         viewPager.setAdapter(new ViewPagerAdapter(this,recipesWeek));
         viewPager.setPageTransformer(transformer);
-
     }
 
-    //Rufe die generierenActivity auf
-    public void genTage(View v) {
 
-
-
-    }
     //neu laden des ausgewählten Tages
     public void reloadDay(View v) {
 

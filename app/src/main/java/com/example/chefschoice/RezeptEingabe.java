@@ -158,7 +158,7 @@ public class RezeptEingabe extends AppCompatActivity {
                 }
                 String name = inputZutatenName.getText().toString();
                 String mengeText = inputZutatenMenge.getText().toString();
-                Double menge = Double.valueOf(mengeText);
+                double menge = Double.parseDouble(mengeText);
                 String einheit = dropdown.getText().toString();
                 Ingredient ingredient = new Ingredient(name, menge, einheit);
                 ingredientList.add(ingredient);

@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginHorizontal="10dp"
-            android:hint="Rezeptname"
+            android:hint="@string/rezeptname"
             android:textColorHint="@color/black"
             app:boxStrokeColor="@color/black"
             app:boxStrokeWidth="2dp"
@@ -88,7 +88,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="16dp"
-            android:text="Menge immer für eine Person"
+            android:text="@string/mengeText"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -107,7 +107,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="141dp"
                     android:layout_height="wrap_content"
-                    android:hint="Zutatenname"
+                    android:hint="@string/zutatenname"
                     android:textColorHint="@color/black"
                     app:boxStrokeColor="@color/black"
                     app:boxStrokeWidth="2dp"
@@ -173,7 +173,7 @@
                 android:layout_width="65dp"
                 android:layout_height="48dp"
                 android:contentDescription="hi"
-                android:text="add"
+                android:text="@string/add"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/black"
@@ -241,8 +241,8 @@
                 android:id="@+id/rezeptspeichern"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="100dp"
-                android:text="speichern"
+                android:layout_marginEnd="100dp"
+                android:text="@string/speichern"
                 android:textColor="@color/black"
                 app:strokeWidth="2dp" />
 
@@ -250,7 +250,7 @@
                 android:id="@+id/rezeptabbrechen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="abbrechen"
+                android:text="@string/abbrechen"
                 android:textColor="@color/black"
                 app:strokeWidth="2dp" />
         </LinearLayout>

@@ -14,15 +14,16 @@ import com.example.chefschoice.Model.Recipe;
 import com.example.chefschoice.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.ViewHolder> {
 
    Context context;
 
-   ArrayList<Recipe> recipes;
+   List<Recipe> recipes;
 
 
-    public ViewPagerAdapter(Context context, ArrayList<Recipe> recipes) {
+    public ViewPagerAdapter(Context context, List<Recipe> recipes) {
         this.context = context;
         this.recipes = recipes;
     }
