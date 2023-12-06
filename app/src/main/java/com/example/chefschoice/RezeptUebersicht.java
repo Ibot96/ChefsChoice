@@ -76,7 +76,7 @@ public class RezeptUebersicht extends AppCompatActivity implements OnButtonClick
 
     }
     public boolean onOptionsItemSelected(MenuItem item){
-        finish();
+        startActivity(new Intent(RezeptUebersicht.this, LandingPage.class));
         return true;
     }
 

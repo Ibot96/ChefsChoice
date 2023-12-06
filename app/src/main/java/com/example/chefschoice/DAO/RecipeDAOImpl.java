@@ -96,7 +96,17 @@ public class RecipeDAOImpl implements RecipeDAO{
         return nextId;
     }
 
+    @Override
+    public void updateRecipe(Recipe recipe) {
+        ContentValues values = new ContentValues();
 
+        values.put("Name", recipe.getName());
+        values.put("Beschreibung", recipe.getBeschreibung());
+        values.put("Bild", recipe.getBild());
+
+        db.update("Rezepte", values, "ID = ?", new String[]{String.valueOf(recipe.getId())});
+        /*db.close();*/
+    }
 
 
 }

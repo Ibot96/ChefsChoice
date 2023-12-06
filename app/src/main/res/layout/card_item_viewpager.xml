@@ -7,8 +7,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="280dp"
         android:layout_height="350dp"
-        android:background="?attr/colorPrimaryDark"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="21dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -33,27 +32,28 @@
                 android:background="@drawable/card_corner"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/ic_menu_crop"></ImageView>
+                app:srcCompat="@android:drawable/ic_menu_crop" />
 
             <TextView
                 android:id="@+id/Rezeptname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="30sp"
-                android:text="Rezeptname"
+                android:text="@string/rezeptname"
                 android:background="?attr/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rezeptbild"></TextView>
+                app:layout_constraintTop_toBottomOf="@+id/rezeptbild" />
 
             <ImageView
                 android:id="@+id/reloadButton"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:contentDescription="reload"
+                android:contentDescription="@string/reload"
                 android:background="@drawable/reloadbutton"
                 android:src="@drawable/ic_action_reload3"
                 app:layout_constraintEnd_toEndOf="parent"

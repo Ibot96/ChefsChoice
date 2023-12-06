@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">Chef´s Choice</string>
     <string name="genbutton">Generieren</string>
+    <string name="generieren">generieren</string>
+    <string name="abbrechen">abbrechen</string>
+    <string name="add">add</string>
+    <string name="speichern">speichern</string>
+    <string name="rezeptname">Rezeptname</string>
+    <string name="anzahl_an_tagen">Anzahl an Tagen</string>
+    <string name="wieviele_tage">Wieviele Tage?</string>
+    <string name="mengeText">Menge immer für eine Person</string>
+    <string name="zutatenname">Zutatenname</string>
+    <string name="reload">reload</string>
     <string-array name="einheiten">
         <item>ml</item>
         <item>g</item>
