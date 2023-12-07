@@ -11,6 +11,9 @@
     <string name="mengeText">Menge immer für eine Person</string>
     <string name="zutatenname">Zutatenname</string>
     <string name="reload">reload</string>
+    <string name="appicon">appicon</string>
+    <string name="button_to_gallery">Button to Gallery</string>
+    <string name="button_to_camera">Button to Camera</string>
     <string-array name="einheiten">
         <item>ml</item>
         <item>g</item>

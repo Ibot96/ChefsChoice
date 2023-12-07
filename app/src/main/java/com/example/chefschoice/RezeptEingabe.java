@@ -2,6 +2,7 @@ package com.example.chefschoice;
 
 import static com.example.chefschoice.Adapter.IngredientsListAdapter.removeTrailingZeros;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,12 +15,16 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -43,12 +48,9 @@ public class RezeptEingabe extends AppCompatActivity {
 
     private AutoCompleteTextView dropdown;
     private androidx.appcompat.widget.Toolbar toolbar;
-
     private TextInputEditText inputRezeptname, inputZutatenName, inputZutatenMenge, inputBeschreibung;
-
     private ImageView inputBild;
     private List<Ingredient> ingredientList;
-
     private String imagePath;
     private Button add, speichern, abbrechen;
     private RecipeDAOImpl recipeDAO;
@@ -57,8 +59,8 @@ public class RezeptEingabe extends AppCompatActivity {
     private DatabaseHelper dbHelper;
     private ListView liste;
     private IngredientsListAdapter ingredientsListAdapter;
-
     private Recipe editRecipe;
+
 
 
     private boolean editFlag = false;
@@ -215,29 +217,59 @@ public class RezeptEingabe extends AppCompatActivity {
 
         });
         inputBild.setOnClickListener(v -> {
-                Intent fotoMachenIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                Intent fotoAuswaehlenIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                File photFile = null;
-                Uri photoUri = null;
-                try {
-                    photFile = getImageFile();
-                    imagePath = photFile.getAbsolutePath();
-                    photFile.setReadable(true);
-                    photFile.setWritable(true);
-                    photoUri = FileProvider.getUriForFile(RezeptEingabe.this, "com.example.chefschoice.fileprovider", photFile);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                Log.d("Bild", "Uri: " + photoUri.toString());
-                Log.d("Bild", "File: " +  photFile.getAbsolutePath());
-                fotoMachenIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-                inputBild.setImageBitmap(bitmap);
-                Intent auswahl = Intent.createChooser(fotoAuswaehlenIntent, "Bild auswählen");
-                auswahl.putExtra(Intent.EXTRA_ALTERNATE_INTENTS, new Intent[] {fotoMachenIntent});
-
-                startActivityForResult(auswahl, 1);
+                initDialog();
         });
+    }
+
+    private void initDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.input_bild_dialog);
+        dialog.setCanceledOnTouchOutside(true);
+
+        ImageButton gallery = dialog.findViewById(R.id.intentGallery);
+        ImageButton cam = dialog.findViewById(R.id.intentCamera);
+
+        gallery.setOnClickListener(v -> {
+            Toast toast = new Toast(this);
+            toast.setText("gallery");
+            toast.show();
+
+            dialog.dismiss();
+        });
+
+        cam.setOnClickListener(v -> {
+            Toast toast = new Toast(this);
+            toast.setText("cam");
+            toast.show();
+
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
+
+    private void tmp(){
+        Intent fotoMachenIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent fotoAuswaehlenIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        File photFile = null;
+        Uri photoUri = null;
+        try {
+            photFile = getImageFile();
+            imagePath = photFile.getAbsolutePath();
+            photFile.setReadable(true);
+            photFile.setWritable(true);
+            photoUri = FileProvider.getUriForFile(RezeptEingabe.this, "com.example.chefschoice.fileprovider", photFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Log.d("Bild", "Uri: " + photoUri.toString());
+        Log.d("Bild", "File: " +  photFile.getAbsolutePath());
+        fotoMachenIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        inputBild.setImageBitmap(bitmap);
+        Intent auswahl = Intent.createChooser(fotoMachenIntent, "Bild auswählen");
+        auswahl.putExtra(Intent.EXTRA_ALTERNATE_INTENTS, new Intent[] {fotoAuswaehlenIntent});
+        startActivityForResult(auswahl, 1);
     }
     //anzeigen der übergebenen Liste
     private void showIngredientList(List<Ingredient> list) {
