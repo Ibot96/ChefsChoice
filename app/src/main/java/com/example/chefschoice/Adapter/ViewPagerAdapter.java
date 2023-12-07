@@ -3,6 +3,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.chefschoice.Model.Recipe;
 import com.example.chefschoice.R;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +41,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Recipe item = recipes.get(position);
-
-        /*holder.imageView.setImageResource(item.getBild());*/ // todo byte[] -> int schauen
+        //todo bildhinzufügen
         holder.rezeptname.setText(item.getName());
     }//ordnet werte den views zu die in dem layout file gebaut wurden basierend auf der position der recycler view
 
@@ -52,14 +53,17 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder{
         //holt die views von dem layout file card item
         //
-        ImageView imageView;
+        ImageView rezeptbild;
         TextView rezeptname;
+        ImageView reload;
+        ImageView delete;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            imageView = itemView.findViewById(R.id.rezeptbild);
+            rezeptbild = itemView.findViewById(R.id.rezeptbild);
             rezeptname = itemView.findViewById(R.id.Rezeptname);
-
+            reload = itemView.findViewById(R.id.reloadButton);
+            delete = itemView.findViewById(R.id.deleteButton);
         }
     }
 }

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
         android:layout_width="280dp"
         android:layout_height="350dp"
-        app:cardCornerRadius="21dp"
+        app:cardCornerRadius="22dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -23,7 +24,6 @@
             android:background="@drawable/card_corner"
             >
 
-
             <ImageView
                 android:id="@+id/rezeptbild"
                 android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/ic_menu_crop" />
+                app:srcCompat="@android:drawable/ic_menu_camera" />
 
             <TextView
                 android:id="@+id/Rezeptname"
@@ -53,13 +53,23 @@
                 android:id="@+id/reloadButton"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:contentDescription="@string/reload"
-                android:background="@drawable/reloadbutton"
-                android:src="@drawable/ic_action_reload3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_margin="11dp"
-                android:onClick="reloadDay"/>
+                android:contentDescription="@string/reload"
+                android:src="@drawable/ic_action_reload3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/deleteButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="11dp"
+                android:contentDescription="@string/delete"
+                android:src="@drawable/delete_outline"
+                android:scaleY="0.8"
+                android:scaleX="0.8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
