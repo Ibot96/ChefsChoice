@@ -76,14 +76,15 @@ public class LandingPage extends AppCompatActivity{
 
 
         if (!allPrefs.isEmpty()){
-            Log.d("Preferences","in");
             for (Map.Entry<String, ?> entry : allPrefs.entrySet()) {
                 if (entry.getValue() instanceof Integer) {
-                    currentWeekIDs.add((Integer) entry.getValue());
-                    recipesWeek.add(recipeDAO.getRecipeById((Integer) entry.getValue()));
+                    Recipe recipe = recipeDAO.getRecipeById((Integer) entry.getValue());
+                    if (recipe!=null){
+                        currentWeekIDs.add((Integer) entry.getValue());
+                        recipesWeek.add(recipe);
+                    }
                 }
             }
-
             showViewpager();
         }
 

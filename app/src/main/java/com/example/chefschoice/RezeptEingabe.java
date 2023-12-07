@@ -14,24 +14,16 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-
 import android.view.inputmethod.InputMethodManager;
-
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
-
 import com.example.chefschoice.Adapter.IngredientsListAdapter;
 import com.example.chefschoice.DAO.IngredientDAOImpl;
 import com.example.chefschoice.DAO.RecipeDAOImpl;
@@ -39,8 +31,6 @@ import com.example.chefschoice.DB.DatabaseHelper;
 import com.example.chefschoice.Model.Ingredient;
 import com.example.chefschoice.Model.Recipe;
 import com.google.android.material.textfield.TextInputEditText;
-
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -104,7 +94,7 @@ public class RezeptEingabe extends AppCompatActivity {
             //eintragen der Daten
             inputRezeptname.setText(editRecipe.getName());
             inputBeschreibung.setText(editRecipe.getBeschreibung());
-            //zuatenliste
+            //zutatenliste
             ingredientList = ingredientDAO.getIngrediantByRecipeId(id);
             showIngredientList(ingredientList);
         }
