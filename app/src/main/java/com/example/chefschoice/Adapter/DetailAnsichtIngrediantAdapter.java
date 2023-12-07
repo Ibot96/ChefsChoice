@@ -15,10 +15,10 @@ import com.example.chefschoice.R;
 
 import java.util.List;
 
-public class IngrediantListAdapter extends ArrayAdapter<Ingredient> {
+public class DetailAnsichtIngrediantAdapter extends ArrayAdapter<Ingredient> {
 
 
-    public IngrediantListAdapter(@NonNull Context context,List<Ingredient> zutatenliste) {
+    public DetailAnsichtIngrediantAdapter(@NonNull Context context, List<Ingredient> zutatenliste) {
         super(context, 0, zutatenliste);
     }
 
@@ -29,7 +29,7 @@ public class IngrediantListAdapter extends ArrayAdapter<Ingredient> {
         Ingredient zutat = getItem(position);
 
         if(convertView == null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.ingredient_list_adapter, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.detail_ingredient_view, parent, false);
         }
 
         TextView zutatenName = convertView.findViewById(R.id.zutatenName);

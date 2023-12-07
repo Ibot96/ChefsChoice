@@ -3,29 +3,21 @@ package com.example.chefschoice;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.example.chefschoice.Adapter.OnButtonClickListener;
 import com.example.chefschoice.Adapter.RecipeListAdapter;
-import com.example.chefschoice.DAO.RecipeDAO;
 import com.example.chefschoice.DAO.RecipeDAOImpl;
 import com.example.chefschoice.DB.DatabaseHelper;
 import com.example.chefschoice.Model.Recipe;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RezeptUebersicht extends AppCompatActivity implements OnButtonClickListener {
 
@@ -61,7 +53,7 @@ public class RezeptUebersicht extends AppCompatActivity implements OnButtonClick
 
 
 
-        adapter = new RecipeListAdapter(this, R.layout.list_adapter, rezepte);
+        adapter = new RecipeListAdapter(this, R.layout.recipelistadapter, rezepte);
         adapter.setOnButtonClickListener(this);
         liste.setAdapter(adapter);
 

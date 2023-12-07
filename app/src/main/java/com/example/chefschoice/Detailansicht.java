@@ -1,17 +1,14 @@
 package com.example.chefschoice;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,10 +20,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.chefschoice.Adapter.IngrediantListAdapter;
-import com.example.chefschoice.Adapter.RecipeListAdapter;
+import com.example.chefschoice.Adapter.DetailAnsichtIngrediantAdapter;
 import com.example.chefschoice.DAO.IngredientDAOImpl;
-import com.example.chefschoice.DAO.RecipeDAO;
 import com.example.chefschoice.DAO.RecipeDAOImpl;
 import com.example.chefschoice.DB.DatabaseHelper;
 import com.example.chefschoice.Model.Ingredient;
@@ -89,7 +84,7 @@ public class Detailansicht extends AppCompatActivity {
 
         zutatenListe = ingredientDAO.getIngrediantByRecipeId(id);
 
-        IngrediantListAdapter adapter = new IngrediantListAdapter(this, zutatenListe);
+        DetailAnsichtIngrediantAdapter adapter = new DetailAnsichtIngrediantAdapter(this, zutatenListe);
 
         liste.setAdapter(adapter);
 

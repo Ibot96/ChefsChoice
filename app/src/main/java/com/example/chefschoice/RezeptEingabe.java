@@ -1,6 +1,6 @@
 package com.example.chefschoice;
 
-import static com.example.chefschoice.Adapter.IngredientsListAdapter.removeTrailingZeros;
+import static com.example.chefschoice.Adapter.RezeptEingabeIngredientAdapter.removeTrailingZeros;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -29,7 +29,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
-import com.example.chefschoice.Adapter.IngredientsListAdapter;
+import com.example.chefschoice.Adapter.RezeptEingabeIngredientAdapter;
 import com.example.chefschoice.DAO.IngredientDAOImpl;
 import com.example.chefschoice.DAO.RecipeDAOImpl;
 import com.example.chefschoice.DB.DatabaseHelper;
@@ -58,7 +58,7 @@ public class RezeptEingabe extends AppCompatActivity {
     private SQLiteDatabase db;
     private DatabaseHelper dbHelper;
     private ListView liste;
-    private IngredientsListAdapter ingredientsListAdapter;
+    private RezeptEingabeIngredientAdapter rezeptEingabeIngredientAdapter;
     private Recipe editRecipe;
 
 
@@ -200,10 +200,10 @@ public class RezeptEingabe extends AppCompatActivity {
         });
 
         liste.setOnItemClickListener((parent, view, position, id) -> {
-                Ingredient i = ingredientsListAdapter.getItem(position);
-                String name = ingredientsListAdapter.getItem(position).getName();
-                String menge = String.valueOf(ingredientsListAdapter.getItem(position).getMenge());
-                String einheit = ingredientsListAdapter.getItem(position).getEinheit();
+                Ingredient i = rezeptEingabeIngredientAdapter.getItem(position);
+                String name = rezeptEingabeIngredientAdapter.getItem(position).getName();
+                String menge = String.valueOf(rezeptEingabeIngredientAdapter.getItem(position).getMenge());
+                String einheit = rezeptEingabeIngredientAdapter.getItem(position).getEinheit();
 
                 inputZutatenName.setText(i.getName());
                 inputZutatenMenge.setText(removeTrailingZeros(i.getMenge()));
@@ -212,7 +212,7 @@ public class RezeptEingabe extends AppCompatActivity {
                 fillDropdown();
                 ingredientList.remove(i);
 
-                ingredientsListAdapter.notifyDataSetChanged();
+                rezeptEingabeIngredientAdapter.notifyDataSetChanged();
                 //Log.d("chefchoice2", name + ", " + menge + " " + einheit);
 
         });
@@ -274,8 +274,8 @@ public class RezeptEingabe extends AppCompatActivity {
     //anzeigen der übergebenen Liste
     private void showIngredientList(List<Ingredient> list) {
         //anzeigen in der Liste
-        ingredientsListAdapter = new IngredientsListAdapter(this, R.layout.ingredients_list_item, list);
-        liste.setAdapter(ingredientsListAdapter);
+        rezeptEingabeIngredientAdapter = new RezeptEingabeIngredientAdapter(this, R.layout.recipe_ingredient_input_list, list);
+        liste.setAdapter(rezeptEingabeIngredientAdapter);
     }
 
     //fühlt die Einheitenliste
