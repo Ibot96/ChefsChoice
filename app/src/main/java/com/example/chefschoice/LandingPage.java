@@ -37,7 +37,6 @@ public class LandingPage extends AppCompatActivity{
     private SharedPreferences preferences;
     private List<Integer> currentWeekIDs;
     private ViewPager2 viewPager;
-    private FloatingActionButton menuFab;
     private FloatingActionButton addFab,createFab, listFab;
     private Boolean areFabsVisible;
     private androidx.appcompat.widget.Toolbar toolbar;
@@ -122,7 +121,7 @@ public class LandingPage extends AppCompatActivity{
         addFab = (FloatingActionButton) findViewById(R.id.menu_add);
         createFab = (FloatingActionButton) findViewById(R.id.menu_create);
         listFab = (FloatingActionButton) findViewById(R.id.menu_list);
-        menuFab = (FloatingActionButton) findViewById(R.id.menu);
+        FloatingActionButton menuFab = (FloatingActionButton) findViewById(R.id.menu);
 
         //Hide buttons
         addFab.setVisibility(View.GONE);
@@ -238,7 +237,7 @@ public class LandingPage extends AppCompatActivity{
         for (Recipe r: recipesWeek) {
             Log.d("viewpager", r.getName());
         }
-        viewPager.setAdapter(new ViewPagerAdapter(this,recipesWeek));
+        viewPager.setAdapter(new ViewPagerAdapter(this,recipesWeek, allRecipes));
         viewPager.setPageTransformer(transformer);
     }
 

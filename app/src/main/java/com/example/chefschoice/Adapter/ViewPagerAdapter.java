@@ -3,20 +3,16 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-
 import com.example.chefschoice.Model.Recipe;
 import com.example.chefschoice.R;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.ViewHolder> {
 
@@ -24,10 +20,13 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
 
    List<Recipe> recipes;
 
+   List<Recipe> allrecipes;
 
-    public ViewPagerAdapter(Context context, List<Recipe> recipes) {
+
+    public ViewPagerAdapter(Context context, List<Recipe> recipes, List<Recipe> allrecipes) {
         this.context = context;
         this.recipes = recipes;
+        this.allrecipes = allrecipes;
     }
 
     @NonNull
@@ -42,7 +41,23 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Recipe item = recipes.get(position);
         //todo bildhinzufügen
+        /*holder.rezeptbild.setImageURI();*/
         holder.rezeptname.setText(item.getName());
+
+        holder.reload.setOnClickListener(v -> {
+            Random random = new Random();
+            List<Recipe> tmp = new ArrayList<>(allrecipes);
+            tmp.removeAll(recipes);
+            int index = random.nextInt(tmp.size());
+            recipes.set(position,tmp.get(index));
+            recipes.remove(item);
+            notifyDataSetChanged();
+
+        });
+        holder.delete.setOnClickListener(v -> {
+            recipes.remove(item);
+            notifyDataSetChanged();
+        });
     }//ordnet werte den views zu die in dem layout file gebaut wurden basierend auf der position der recycler view
 
     @Override
