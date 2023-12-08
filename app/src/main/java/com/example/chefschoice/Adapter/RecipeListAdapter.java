@@ -77,7 +77,7 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
 
 
         ImageView imageView =  convertView.findViewById(R.id.bild);
-        Uri uri = getBitmapForView(bild);
+        Uri uri = Uri.parse(bild);
 
            if (uri != null){
                imageView.setImageURI(uri);

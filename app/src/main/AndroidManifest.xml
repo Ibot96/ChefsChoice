@@ -33,6 +33,8 @@
         </provider>
 
 
+
+
         <activity
             android:name=".LandingPage"
             android:exported="true">
