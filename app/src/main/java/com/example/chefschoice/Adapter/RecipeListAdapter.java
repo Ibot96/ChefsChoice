@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -75,14 +76,14 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
         });
 
 
-        /*ImageView imageView =  convertView.findViewById(R.id.bild);
-        Bitmap imgBitmap = getBitmapForView(bild);
+        ImageView imageView =  convertView.findViewById(R.id.bild);
+        Uri uri = getBitmapForView(bild);
 
-           if (imgBitmap != null){
-               imageView.setImageBitmap(imgBitmap);
+           if (uri != null){
+               imageView.setImageURI(uri);
            }else {
                 Log.e("Err", "File Not Found");
-            }*/
+            }
 
         TextView nameView = (TextView)  convertView.findViewById(R.id.text);
 
@@ -91,18 +92,16 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
         return convertView;
     }
 
-    /*public Bitmap getBitmapForView(String path){
+    public Uri getBitmapForView(String path){
         String imagePath = path;
-        Bitmap imgBitmap;
+        Uri uri = null;
 
 
         File imgFile = new File(imagePath);
 
         if (imgFile.exists()) {
-           imgBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-        } else {
-            imgBitmap = null;
+          uri = Uri.fromFile(imgFile);
         }
-            return  imgBitmap;
-        }*/
+            return  uri;
+        }
 }
