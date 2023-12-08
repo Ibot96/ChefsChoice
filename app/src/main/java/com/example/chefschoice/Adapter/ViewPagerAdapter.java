@@ -1,10 +1,13 @@
 package com.example.chefschoice.Adapter;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.chefschoice.Model.Recipe;
@@ -40,18 +43,24 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Recipe item = recipes.get(position);
-        //todo bildhinzufügen
-        /*holder.rezeptbild.setImageURI();*/
+        Uri uri = Uri.parse(item.getBild());
+        holder.rezeptbild.setImageURI(uri);
         holder.rezeptname.setText(item.getName());
 
         holder.reload.setOnClickListener(v -> {
             Random random = new Random();
             List<Recipe> tmp = new ArrayList<>(allrecipes);
             tmp.removeAll(recipes);
-            int index = random.nextInt(tmp.size());
-            recipes.set(position,tmp.get(index));
-            recipes.remove(item);
-            notifyDataSetChanged();
+            if (tmp.size()>0){
+                int index = random.nextInt(tmp.size());
+                recipes.set(position,tmp.get(index));
+                recipes.remove(item);
+                notifyDataSetChanged();
+            }else {
+                Toast toast = new Toast(v.getContext());
+                toast.setText("Kein weiteres Rezept verfügbar");
+                toast.show();
+            }
 
         });
         holder.delete.setOnClickListener(v -> {
