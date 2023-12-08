@@ -1,8 +1,11 @@
 package com.example.chefschoice;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -10,6 +13,8 @@ import android.widget.ListView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.chefschoice.Adapter.OnButtonClickListener;
 import com.example.chefschoice.Adapter.RecipeListAdapter;
@@ -39,7 +44,7 @@ public class RezeptUebersicht extends AppCompatActivity implements OnButtonClick
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         zuRezepteingabe= toolbar.findViewById(R.id.zuRezepteingabe);
-
+        askPermission();
         zuRezepteingabe.setOnClickListener(view -> {
             startActivity(new Intent(RezeptUebersicht.this, RezeptEingabe.class));
         });
@@ -83,4 +88,23 @@ public class RezeptUebersicht extends AppCompatActivity implements OnButtonClick
     public void onDeleteButtonClick(int itemId) {
         recipeDAO.deleteRecipe(itemId);
     }
+
+    private void askPermission(){
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED){
+
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, 123);
+        }
+
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED){
+
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_MEDIA_IMAGES}, 124);
+        }
+
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+            Log.e("ddd", "Permission");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 125);
+        }
+    }
+
 }
+
