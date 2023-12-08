@@ -61,7 +61,7 @@ public class RezeptEingabe extends AppCompatActivity {
     private RezeptEingabeIngredientAdapter rezeptEingabeIngredientAdapter;
     private Recipe editRecipe;
 
-
+    private Uri bildUri = null;
 
     private boolean editFlag = false;
 
@@ -105,16 +105,9 @@ public class RezeptEingabe extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        File file = new File(imagePath);
+        inputBild.setImageURI(Uri.fromFile(file));
 
-        if(data != null){
-            Uri uri = data.getData();
-            String file = removeUnwantedPrefix(uri.getPath());
-            Log.d("Galerie", "request" + requestCode);
-            Log.d("Galerie", "result" + resultCode);
-            Log.d("Galerie", "data" + uri.getPath());
-            Log.d("Galerie", "Path" + file);
-            imagePath = file;
-        }
     }
 
     private File getImageFile() throws IOException{
@@ -242,7 +235,22 @@ public class RezeptEingabe extends AppCompatActivity {
             Toast toast = new Toast(this);
             toast.setText("cam");
             toast.show();
-
+            Intent fotoMachenIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            File photFile = null;
+            Uri photoUri = null;
+            try {
+                photFile = getImageFile();
+                imagePath = photFile.getAbsolutePath();
+                photFile.setReadable(true);
+                photFile.setWritable(true);
+                photoUri = FileProvider.getUriForFile(RezeptEingabe.this, "com.example.chefschoice.fileprovider", photFile);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Log.d("Bild", "Uri: " + photoUri.toString());
+            Log.d("Bild", "File: " +  photFile.getAbsolutePath());
+            fotoMachenIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            startActivityForResult(fotoMachenIntent,1);
             dialog.dismiss();
         });
         dialog.show();
