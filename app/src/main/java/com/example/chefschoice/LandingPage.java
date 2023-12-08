@@ -37,7 +37,6 @@ public class LandingPage extends AppCompatActivity{
     private SharedPreferences preferences;
     private List<Integer> currentWeekIDs;
     private ViewPager2 viewPager;
-    private FloatingActionButton menuFab;
     private FloatingActionButton addFab,createFab, listFab;
     private Boolean areFabsVisible;
     private androidx.appcompat.widget.Toolbar toolbar;
@@ -122,7 +121,7 @@ public class LandingPage extends AppCompatActivity{
         addFab = (FloatingActionButton) findViewById(R.id.menu_add);
         createFab = (FloatingActionButton) findViewById(R.id.menu_create);
         listFab = (FloatingActionButton) findViewById(R.id.menu_list);
-        menuFab = (FloatingActionButton) findViewById(R.id.menu);
+        FloatingActionButton menuFab = (FloatingActionButton) findViewById(R.id.menu);
 
         //Hide buttons
         addFab.setVisibility(View.GONE);
@@ -130,15 +129,9 @@ public class LandingPage extends AppCompatActivity{
         listFab.setVisibility(View.GONE);
         areFabsVisible = false;
 
-        menuFab.setOnClickListener(v -> {
-            toggleFABMenu();
-        });
-        listFab.setOnClickListener(v -> {
-            startActivity(new Intent(LandingPage.this,RezeptUebersicht.class));
-        });
-        addFab.setOnClickListener(v -> {
-            startActivity(new Intent(LandingPage.this, RezeptEingabe.class));
-        });
+        menuFab.setOnClickListener(v -> toggleFABMenu());
+        listFab.setOnClickListener(v -> startActivity(new Intent(LandingPage.this,RezeptUebersicht.class)));
+        addFab.setOnClickListener(v -> startActivity(new Intent(LandingPage.this, RezeptEingabe.class)));
         createFab.setOnClickListener(v -> {
             if (currentWeekIDs.size()!=0){
                 viewPager.setVisibility(View.INVISIBLE);
@@ -185,7 +178,7 @@ public class LandingPage extends AppCompatActivity{
     }
     private void genRecipes() {
         String daysString = inputDays.getText().toString();
-        SharedPreferences.Editor myEditor = preferences.edit();;
+        SharedPreferences.Editor myEditor = preferences.edit();
         myEditor.clear();
 
         if (!daysString.equals("")){
@@ -198,7 +191,7 @@ public class LandingPage extends AppCompatActivity{
                 myEditor.putInt("ID"+i,currentWeekIDs.get(i));
             }
         }
-        myEditor.commit();
+        myEditor.apply();
 
     }
     private List<Integer> getRandomElements(List<Recipe> recipes, int days ){
@@ -238,29 +231,18 @@ public class LandingPage extends AppCompatActivity{
         for (Recipe r: recipesWeek) {
             Log.d("viewpager", r.getName());
         }
-        viewPager.setAdapter(new ViewPagerAdapter(this,recipesWeek));
+        viewPager.setAdapter(new ViewPagerAdapter(this,recipesWeek, allRecipes));
         viewPager.setPageTransformer(transformer);
-    }
-
-
-    //neu laden des ausgewählten Tages
-    public void reloadDay(View v) {
-
     }
 
     private void askPermission(){
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED){
-
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 123);
         }
-
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED){
-
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, 124);
         }
-
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-            Log.e("ddd", "Permission");
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 125);
         }
     }

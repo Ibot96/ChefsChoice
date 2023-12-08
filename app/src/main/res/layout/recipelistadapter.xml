@@ -14,14 +14,15 @@
         android:src="@drawable/kameraplatzhalter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:gravity="center"
-        android:text="Test"
+        android:text="@string/test"
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -45,7 +46,7 @@
             android:layout_gravity="top"
             android:backgroundTint="?attr/colorPrimaryDark"
             android:src="@drawable/deleteicon"
-            android:contentDescription="Rezept Löschen"
+            android:contentDescription="@string/rezept_l_schen"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:clickable="false"/>

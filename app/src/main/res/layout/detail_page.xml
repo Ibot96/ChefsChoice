@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:context=".RezeptUebersicht"
         >
@@ -74,7 +74,7 @@
             android:textStyle="bold"
             android:gravity="center"
             android:textColor="@color/black"
-            android:text="Zutaten"
+            android:text="@string/zutaten"
             android:layout_marginTop="10dp"
             android:layout_marginHorizontal="10dp"
             >
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:divider="@null"
-            android:dividerHeight="0dp"></ListView>
+            android:dividerHeight="0dp" />
 
         <TextView
             android:layout_width="match_parent"

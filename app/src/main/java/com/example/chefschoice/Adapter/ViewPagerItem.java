@@ -6,14 +6,7 @@ public class ViewPagerItem {
 
     int imageID;
     String rezeptName;
-    /*List<Zutaten> zutatenList;
-    public List<Zutaten> getZutatenList() {
-        return zutatenList;
-    }*/
 
-    /*public void setZutatenList(List<Zutaten> zutatenList) {
-        this.zutatenList = zutatenList;
-    }*/
 
     public ViewPagerItem(int imageID, String rezeptName /*List<Zutaten> zutatenList*/) {
         this.imageID = imageID;

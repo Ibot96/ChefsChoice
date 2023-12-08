@@ -14,6 +14,12 @@
     <string name="appicon">appicon</string>
     <string name="button_to_gallery">Button to Gallery</string>
     <string name="button_to_camera">Button to Camera</string>
+    <string name="delete">delete</string>
+    <string name="zutaten">Zutaten</string>
+    <string name="addrecipe">addRecipe</string>
+    <string name="test">Test</string>
+    <string name="rezept_l_schen">Rezept Löschen</string>
+    <string name="todo">TODO</string>
     <string-array name="einheiten">
         <item>ml</item>
         <item>g</item>
