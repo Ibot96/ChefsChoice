@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -74,7 +75,7 @@ public class Detailansicht extends AppCompatActivity {
         txtName.setText(name);
 
         try {
-            imView.setImageBitmap(getImageForView(imgPath));
+            imView.setImageURI(Uri.parse(imgPath));
 
         } catch (Exception e){
             Log.d("chefchoice2", e.toString());

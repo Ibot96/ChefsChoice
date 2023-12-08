@@ -38,6 +38,8 @@ import com.example.chefschoice.Model.Recipe;
 import com.google.android.material.textfield.TextInputEditText;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,7 +63,7 @@ public class RezeptEingabe extends AppCompatActivity {
     private RezeptEingabeIngredientAdapter rezeptEingabeIngredientAdapter;
     private Recipe editRecipe;
 
-
+    private Uri bildUri = null;
 
     private boolean editFlag = false;
 
@@ -96,6 +98,7 @@ public class RezeptEingabe extends AppCompatActivity {
             //eintragen der Daten
             inputRezeptname.setText(editRecipe.getName());
             inputBeschreibung.setText(editRecipe.getBeschreibung());
+            inputBild.setImageURI(Uri.parse(editRecipe.getBild()));
             //zutatenliste
             ingredientList = ingredientDAO.getIngrediantByRecipeId(id);
             showIngredientList(ingredientList);
@@ -106,15 +109,31 @@ public class RezeptEingabe extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(data != null){
-            Uri uri = data.getData();
-            String file = removeUnwantedPrefix(uri.getPath());
-            Log.d("Galerie", "request" + requestCode);
-            Log.d("Galerie", "result" + resultCode);
-            Log.d("Galerie", "data" + uri.getPath());
-            Log.d("Galerie", "Path" + file);
-            imagePath = file;
+        if(requestCode == 2 && data != null){
+            Uri selectedImage = data.getData();
+            Log.d("UriTest", String.valueOf(selectedImage));
+            File photFile = null;
+            Uri photoUri = null;
+            try {
+                photFile = getImageFile();
+
+                photFile.setReadable(true);
+                photFile.setWritable(true);
+                photoUri = FileProvider.getUriForFile(RezeptEingabe.this, "com.example.chefschoice.fileprovider", photFile);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            copyImage(this,selectedImage,photoUri);
+            inputBild.setImageURI(selectedImage);
+            imagePath = photoUri.toString();
+            Log.d("UriTest", "Path" + imagePath);
+        } else if (requestCode == 1) {
+
+            inputBild.setImageURI(Uri.parse(imagePath));
         }
+
+
+
     }
 
     private File getImageFile() throws IOException{
@@ -235,6 +254,8 @@ public class RezeptEingabe extends AppCompatActivity {
             toast.setText("gallery");
             toast.show();
 
+            Intent fotoAuswaehlenIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(fotoAuswaehlenIntent,2);
             dialog.dismiss();
         });
 
@@ -242,7 +263,23 @@ public class RezeptEingabe extends AppCompatActivity {
             Toast toast = new Toast(this);
             toast.setText("cam");
             toast.show();
+            Intent fotoMachenIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            File photFile = null;
+            Uri photoUri = null;
+            try {
+                photFile = getImageFile();
 
+                photFile.setReadable(true);
+                photFile.setWritable(true);
+                photoUri = FileProvider.getUriForFile(RezeptEingabe.this, "com.example.chefschoice.fileprovider", photFile);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            imagePath = photoUri.toString();
+            Log.d("Bild", "Uri: " + photoUri.toString());
+            Log.d("Bild", "File: " +  photFile.getAbsolutePath());
+            fotoMachenIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            startActivityForResult(fotoMachenIntent,1);
             dialog.dismiss();
         });
         dialog.show();
@@ -304,5 +341,35 @@ public class RezeptEingabe extends AppCompatActivity {
         return true;
     }
 
+    public static void copyImage(Context context, Uri sourceUri, Uri destinationUri) {
+        try {
+            // Öffne InputStream für die Quelldatei
+            InputStream inputStream = context.getContentResolver().openInputStream(sourceUri);
+
+            // Öffne OutputStream für die Zieldatei
+            OutputStream outputStream = context.getContentResolver().openOutputStream(destinationUri);
+
+            // Kopiere die Daten von InputStream zu OutputStream
+            copyStream(inputStream, outputStream);
+
+            // Schließe die Streams
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            if (outputStream != null) {
+                outputStream.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void copyStream(InputStream input, OutputStream output) throws IOException {
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = input.read(buffer)) != -1) {
+            output.write(buffer, 0, bytesRead);
+        }
+    }
 
 }
