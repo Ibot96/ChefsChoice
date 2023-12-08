@@ -1,5 +1,8 @@
 package com.example.chefschoice.Adapter;
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +13,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.chefschoice.Detailansicht;
+import com.example.chefschoice.LandingPage;
 import com.example.chefschoice.Model.Recipe;
 import com.example.chefschoice.R;
+import com.example.chefschoice.RezeptUebersicht;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +55,12 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
         holder.rezeptbild.setImageURI(uri);
         holder.rezeptname.setText(item.getName());
 
+        holder.rezeptbild.setOnClickListener(v -> {
+            Intent intent = new Intent(context, Detailansicht.class);
+            intent.putExtra("selctedRecipe", item.getId());
+            context.startActivity(intent);
+        });
+
         holder.reload.setOnClickListener(v -> {
             Random random = new Random();
             List<Recipe> tmp = new ArrayList<>(allrecipes);
@@ -61,7 +75,6 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
                 toast.setText("Kein weiteres Rezept verfügbar");
                 toast.show();
             }
-
         });
         holder.delete.setOnClickListener(v -> {
             recipes.remove(item);
