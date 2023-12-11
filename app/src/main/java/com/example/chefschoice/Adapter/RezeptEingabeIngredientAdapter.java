@@ -43,12 +43,24 @@ public class RezeptEingabeIngredientAdapter extends ArrayAdapter<Ingredient> {
 
         positionNumber.setText((position+1) + ". ");
         zutatenName.setText(ingredient.getName());
-        menge.setText(removeTrailingZeros(ingredient.getMenge()));
+
+        if (sindNurNullenHintermKomma(ingredient.getMenge())){
+            menge.setText(String.valueOf((int) ingredient.getMenge()));
+        }else{
+            menge.setText(String.valueOf(ingredient.getMenge()));
+        }
         einheit2.setText(ingredient.getEinheit());
 
         return view;
     }
-    public static String removeTrailingZeros(double d) {
-        return String.valueOf(d).replaceAll("[0]*$", "").replaceAll(".$", "");
+
+    public static boolean sindNurNullenHintermKomma(double zahl) {
+        //wenn keine stellen hinter dem komma sind wird true ausgegeben
+        String[] teile = Double.toString(zahl).split("\\.");
+        if (teile.length > 1) {
+            String dezimalteil = teile[1];
+            return dezimalteil.matches("0*");
+        }
+        return true;
     }
 }

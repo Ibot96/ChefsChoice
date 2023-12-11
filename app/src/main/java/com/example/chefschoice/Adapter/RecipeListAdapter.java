@@ -54,7 +54,6 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         String name = getItem(position).getName();
         String bild = getItem(position).getBild();
-        String beschreibung = getItem(position).getBeschreibung();
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent,false);
@@ -77,13 +76,13 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
 
 
         ImageView imageView =  convertView.findViewById(R.id.bild);
-        Uri uri = Uri.parse(bild);
 
-           if (uri != null){
-               imageView.setImageURI(uri);
-           }else {
-                Log.e("Err", "File Not Found");
-            }
+
+       if (bild != null){
+           imageView.setImageURI(Uri.parse(bild));
+       }else {
+            Log.e("Err", "File Not Found");
+        }
 
         TextView nameView = (TextView)  convertView.findViewById(R.id.text);
 

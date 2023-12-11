@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -52,36 +56,6 @@
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!--<LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="20dp"
-                android:text="Bild"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="60dp"
-                android:layout_height="48dp"
-                android:layout_marginLeft="40dp"
-                android:background="@drawable/border"
-                app:srcCompat="@drawable/ic_action_add" />
-
-
-        </LinearLayout>-->
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -93,120 +67,123 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/linearLayoutZutateneingabe"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="141dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/zutatenname"
-                    android:textColorHint="@color/black"
-                    app:boxStrokeColor="@color/black"
-                    app:boxStrokeWidth="2dp"
-                    app:cursorColor="@color/black"
-                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:hintTextColor="@color/black">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputZutatenName"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="88dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:hint="Menge"
-                    android:textColorHint="@color/black"
-                    app:boxStrokeColor="@color/black"
-                    app:boxStrokeWidth="2dp"
-                    app:cursorColor="@color/black"
-                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:hintTextColor="@color/black">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputZutatenMenge"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="numberDecimal" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="109dp"
-                    android:layout_height="wrap_content"
-                    android:enabled="true"
-                    android:hint="Einh."
-                    android:textColorHint="@color/black"
-                    app:boxBackgroundColor="?attr/colorPrimaryDark"
-                    app:boxStrokeColor="@color/black"
-                    app:boxStrokeWidth="2dp"
-                    app:cursorColor="@color/black"
-                    app:endIconTint="@color/black"
-                    app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:hintTextColor="@color/black">
-
-                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                        android:id="@+id/inputZutatenEinheit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="none"
-                        app:dropDownBackgroundTint="?attr/colorPrimaryDark" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-
-            <Button
-                android:id="@+id/addbutton"
-                android:layout_width="65dp"
-                android:layout_height="48dp"
-                android:contentDescription="hi"
-                android:text="@string/add"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/black"
-                app:strokeWidth="2dp" />
-
-
-
         <LinearLayout
+            android:id="@+id/linearLayoutZutateneingabe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="141dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/zutatenname"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/black"
+                app:boxStrokeWidth="2dp"
+                app:cursorColor="@color/black"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:hintTextColor="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputZutatenName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="88dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:hint="Menge"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/black"
+                app:boxStrokeWidth="2dp"
+                app:cursorColor="@color/black"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:hintTextColor="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputZutatenMenge"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="109dp"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:hint="Einh."
+                android:textColorHint="@color/black"
+                app:boxBackgroundColor="?attr/colorPrimaryDark"
+                app:boxStrokeColor="@color/black"
+                app:boxStrokeWidth="2dp"
+                app:cursorColor="@color/black"
+                app:endIconTint="@color/black"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:hintTextColor="@color/black">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/inputZutatenEinheit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    app:dropDownBackgroundTint="?attr/colorPrimaryDark" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/addbutton"
+            android:layout_width="65dp"
+            android:layout_height="48dp"
+            android:contentDescription="hi"
+            android:text="@string/add"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:layout_marginBottom="20dp"
+            app:strokeWidth="2dp" />
+
+
+
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:orientation="vertical">
+-->
 
-
-            <FrameLayout
+            <!--<FrameLayout
                 android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:background="@drawable/border"
                 android:layout_marginHorizontal="30dp"
-                >
+                >-->
 
-                <ListView
-                    android:id="@+id/Zutatenliste"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-
-                    android:divider="@color/black"
-                    android:dividerHeight="1dp" />
-            </FrameLayout>
-        </LinearLayout>
+        <ListView
+            android:id="@+id/Zutatenliste"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginBottom="20dp"
+            android:divider="@color/black"
+            android:dividerHeight="1dp"
+            android:background="@drawable/border"
+            android:layout_marginHorizontal="30dp"/>
+            <!--</FrameLayout>-->
+        <!--</LinearLayout>-->
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -257,4 +234,4 @@
 
 
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

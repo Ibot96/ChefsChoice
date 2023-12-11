@@ -51,10 +51,12 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Recipe item = recipes.get(position);
-        Uri uri = Uri.parse(item.getBild());
-        holder.rezeptbild.setImageURI(uri);
-        holder.rezeptname.setText(item.getName());
+        if (item.getBild()!=null){
+            Uri uri = Uri.parse(item.getBild());
+            holder.rezeptbild.setImageURI(uri);
+        }
 
+        holder.rezeptname.setText(item.getName());
         holder.rezeptbild.setOnClickListener(v -> {
             Intent intent = new Intent(context, Detailansicht.class);
             intent.putExtra("selctedRecipe", item.getId());
