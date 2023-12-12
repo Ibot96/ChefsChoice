@@ -89,6 +89,8 @@ public class LandingPage extends AppCompatActivity{
 
     }
 
+
+
     private void initDialog() {
         dialog= new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -162,9 +164,6 @@ public class LandingPage extends AppCompatActivity{
     }
 
     private void initViewpager(){
-        //todo
-        // 1. bilder müssen auf bestimmte größe angepasst werden
-        // 2. es wird immer nur eine seite geladen
         currentWeekIDs = new ArrayList<>();
         recipesWeek = new ArrayList<>();
         viewPager = new ViewPager2(this);
@@ -172,19 +171,27 @@ public class LandingPage extends AppCompatActivity{
         viewPager.setClipToPadding(false);
         viewPager.setPadding(100,0,120,0);
         viewPager.setClipChildren(false);
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(1);
         viewPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
 
     }
     private void genRecipes() {
         String daysString = inputDays.getText().toString();
-        SharedPreferences.Editor myEditor = preferences.edit();
-        myEditor.clear();
+
 
         if (!daysString.equals("")){
             int days = Integer.parseInt(daysString);
             currentWeekIDs = getRandomElements(allRecipes, days);
         }
+        updateSharedPreferences();
+    }
+
+    public void updateSharedPreferences(){
+
+        // SharedPreferences löschen
+        SharedPreferences.Editor myEditor = preferences.edit();
+        myEditor.clear();
+        myEditor.apply();
 
         if(currentWeekIDs!=null){
             for (int i=0;i<currentWeekIDs.size();i++){
@@ -192,7 +199,6 @@ public class LandingPage extends AppCompatActivity{
             }
         }
         myEditor.apply();
-
     }
     private List<Integer> getRandomElements(List<Recipe> recipes, int days ){
         List<Recipe> tmpRecipes = new ArrayList<>(recipes);

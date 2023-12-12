@@ -3,6 +3,7 @@ import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.example.chefschoice.Detailansicht;
 import com.example.chefschoice.LandingPage;
 import com.example.chefschoice.Model.Recipe;
 import com.example.chefschoice.R;
+import com.example.chefschoice.RezeptEingabe;
 import com.example.chefschoice.RezeptUebersicht;
 
 import java.io.File;
@@ -85,6 +87,17 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
         });
         holder.delete.setOnClickListener(v -> {
             recipes.remove(item);
+            SharedPreferences sharedPreferences = context.getSharedPreferences("Current_Recipes", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+
+            if(recipes!=null){
+                for (int i=0;i<recipes.size();i++){
+                    editor.putInt("ID"+i,recipes.get(i).getId());
+                }
+            }
+            editor.apply();
             notifyDataSetChanged();
         });
     }//ordnet werte den views zu die in dem layout file gebaut wurden basierend auf der position der recycler view
