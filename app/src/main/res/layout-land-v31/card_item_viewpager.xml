@@ -7,7 +7,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="280dp"
-        android:layout_height="350dp"
+        android:layout_height="250dp"
         app:cardCornerRadius="22dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
             <ImageView
                 android:id="@+id/rezeptbild"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:layout_margin="20dp"
                 android:scaleType="centerCrop"
                 android:background="@drawable/card_corner"
@@ -37,44 +37,9 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/ic_menu_camera" />
+                app:srcCompat="@android:drawable/ic_menu_camera"
+                android:contentDescription="@string/todo" />
 
-
-            <!--<FrameLayout
-                android:id="@+id/frameLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/backgroundImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_margin="20dp"
-                    android:background="@drawable/card_corner"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                &lt;!&ndash; Bild &ndash;&gt;
-                <ImageView
-                    android:id="@+id/rezeptbild"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="20dp"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@android:drawable/ic_menu_camera" />
-            </FrameLayout>-->
 
             <TextView
                 android:id="@+id/Rezeptname"
@@ -92,7 +57,7 @@
                 android:id="@+id/reloadButton"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_margin="11dp"
+                android:layout_margin="5dp"
                 android:contentDescription="@string/reload"
                 android:src="@drawable/ic_action_reload3"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +67,7 @@
                 android:id="@+id/deleteButton"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_margin="11dp"
+                android:layout_margin="5dp"
                 android:contentDescription="@string/delete"
                 android:src="@drawable/delete_outline"
                 android:scaleY="0.8"

@@ -4,6 +4,7 @@ import static androidx.core.content.ContextCompat.startActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.example.chefschoice.RezeptUebersicht;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -51,10 +53,12 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Recipe item = recipes.get(position);
-        Uri uri = Uri.parse(item.getBild());
-        holder.rezeptbild.setImageURI(uri);
-        holder.rezeptname.setText(item.getName());
+        if (item.getBild()!=null){
+            Uri uri = Uri.parse(item.getBild());
+            holder.rezeptbild.setImageURI(uri);
+        }
 
+        holder.rezeptname.setText(item.getName());
         holder.rezeptbild.setOnClickListener(v -> {
             Intent intent = new Intent(context, Detailansicht.class);
             intent.putExtra("selctedRecipe", item.getId());
@@ -63,8 +67,11 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
 
         holder.reload.setOnClickListener(v -> {
             Random random = new Random();
+            //hier wird die bereits angezeigte liste von den kompletten rezepten abgezogen und aus den
+            //restlichen rezepten wird ein random Rezept ausgewählt
             List<Recipe> tmp = new ArrayList<>(allrecipes);
             tmp.removeAll(recipes);
+
             if (tmp.size()>0){
                 int index = random.nextInt(tmp.size());
                 recipes.set(position,tmp.get(index));

@@ -37,9 +37,25 @@ public class DetailAnsichtIngrediantAdapter extends ArrayAdapter<Ingredient> {
         TextView zutatenEinheit = convertView.findViewById(R.id.zutatenEinheit);
 
         zutatenName.setText(zutat.getName());
-        zutatenMenge.setText(String.valueOf(zutat.getMenge()));
+        //wenn nur nullen hinter dem komma sind wird es auf ein int gecastet und der hintere teil abgeschnitten
+        if(sindNurNullenHintermKomma(zutat.getMenge())){
+            zutatenMenge.setText(String.valueOf((int) zutat.getMenge()));
+        }else{
+            zutatenMenge.setText(String.valueOf(zutat.getMenge()));
+        }
+
         zutatenEinheit.setText(zutat.getEinheit());
 
         return convertView;
+    }
+
+    public static boolean sindNurNullenHintermKomma(double zahl) {
+        //wenn keine stellen hinter dem komma sind wird true ausgegeben
+        String[] teile = Double.toString(zahl).split("\\.");
+        if (teile.length > 1) {
+            String dezimalteil = teile[1];
+            return dezimalteil.matches("0*");
+        }
+        return true;
     }
 }
