@@ -103,7 +103,9 @@ public class LandingPage extends AppCompatActivity{
 
         genButton.setOnClickListener(v -> {
             genRecipes();
-            if (!inputDays.getText().toString().equals("")){
+            if (!inputDays.getText().toString().equals("")
+                    &&!(Integer.valueOf(inputDays.getText().toString())>recipesWeek.size())
+                    &&!(Integer.valueOf(inputDays.getText().toString())==0)){
                 dialog.dismiss();
             }
             if (viewPager!=null&&!dialog.isShowing()){
@@ -135,8 +137,10 @@ public class LandingPage extends AppCompatActivity{
         listFab.setOnClickListener(v -> startActivity(new Intent(LandingPage.this,RezeptUebersicht.class)));
         addFab.setOnClickListener(v -> startActivity(new Intent(LandingPage.this, RezeptEingabe.class)));
         createFab.setOnClickListener(v -> {
-            if (currentWeekIDs.size()!=0){
-                viewPager.setVisibility(View.INVISIBLE);
+            if (currentWeekIDs!=null){
+                if (currentWeekIDs.size()!=0){
+                    viewPager.setVisibility(View.INVISIBLE);
+                }
             }
             inputDays.setText("");
             dialog.show();
@@ -177,7 +181,6 @@ public class LandingPage extends AppCompatActivity{
     }
     private void genRecipes() {
         String daysString = inputDays.getText().toString();
-
 
         if (!daysString.equals("")){
             int days = Integer.parseInt(daysString);

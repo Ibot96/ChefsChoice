@@ -105,6 +105,7 @@ public class RezeptEingabe extends AppCompatActivity {
             inputBeschreibung.setText(editRecipe.getBeschreibung());
             if (editRecipe.getBild()!=null){
                 inputBild.setImageURI(Uri.parse(editRecipe.getBild()));
+                imagePath = String.valueOf(Uri.parse(editRecipe.getBild()));
             }
             //zutatenliste
             ingredientList = ingredientDAO.getIngrediantByRecipeId(id);
@@ -113,40 +114,6 @@ public class RezeptEingabe extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-
-        //speichern des Zustandes
-        outState.putString("imagePath", imagePath);
-        for (int i=0;i<ingredientList.size();i++) {
-            outState.putDouble("menge"+i, ingredientList.get(i).getMenge());
-            outState.putString("name"+i, ingredientList.get(i).getName());
-            outState.putString("einheit"+i, ingredientList.get(i).getEinheit());
-        }
-
-    }
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        //Wiederherstellen des Zustandes
-        imagePath = savedInstanceState.getString("imagePath");
-        ingredientList = new ArrayList<>();
-        int i = 0;
-        while (savedInstanceState.containsKey("menge" + i)){
-            double menge = savedInstanceState.getDouble("menge" + i);
-            String name = savedInstanceState.getString("name" + i);
-            String einheit = savedInstanceState.getString("einheit" + i);
-
-            Ingredient ingredient = new Ingredient(name, menge, einheit);
-            ingredientList.add(ingredient);
-            i++;
-        }
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -245,10 +212,13 @@ public class RezeptEingabe extends AppCompatActivity {
             String bild = imagePath;
 
                 if (editFlag){
-                    //todo update funktion für das bild
-
                     editRecipe.setBeschreibung(beschreibung);
-                    editRecipe.setBild(editRecipe.getBild());
+
+
+                    editRecipe.setBild(imagePath);
+
+
+
                     editRecipe.setName(name);
 
                     ingredientDAO.updateIngredients(ingredientList, editRecipe.getId());
