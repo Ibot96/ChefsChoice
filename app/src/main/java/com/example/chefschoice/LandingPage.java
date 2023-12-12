@@ -14,6 +14,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import java.util.Map;
 import java.util.Random;
@@ -96,6 +98,7 @@ public class LandingPage extends AppCompatActivity{
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.genpopup);
         dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         Button genButton = dialog.findViewById(R.id.generierenPopUp);
         Button cancelButton = dialog.findViewById(R.id.abbrechenPopUp);
