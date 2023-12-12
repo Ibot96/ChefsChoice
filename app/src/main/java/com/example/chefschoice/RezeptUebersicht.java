@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -87,6 +88,9 @@ public class RezeptUebersicht extends AppCompatActivity implements OnButtonClick
     @Override
     public void onDeleteButtonClick(int itemId) {
         recipeDAO.deleteRecipe(itemId);
+        Toast toast = new Toast(this);
+        toast.setText("Rezept gelöscht");
+        toast.show();
     }
 
     private void askPermission(){

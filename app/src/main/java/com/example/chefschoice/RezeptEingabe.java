@@ -110,8 +110,6 @@ public class RezeptEingabe extends AppCompatActivity {
             ingredientList = ingredientDAO.getIngrediantByRecipeId(id);
             showIngredientList(ingredientList);
         }
-
-
     }
 
 
@@ -282,8 +280,6 @@ public class RezeptEingabe extends AppCompatActivity {
                 fillDropdown();
                 ingredientList.remove(i);
                 rezeptEingabeIngredientAdapter.notifyDataSetChanged();
-
-
         });
         inputBild.setOnClickListener(v -> {
                 initDialog();
