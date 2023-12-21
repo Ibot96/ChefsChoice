@@ -58,6 +58,8 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
         if (item.getBild()!=null){
             Uri uri = Uri.parse(item.getBild());
             holder.rezeptbild.setImageURI(uri);
+        }else {
+            holder.rezeptbild.setImageDrawable(context.getDrawable(R.drawable.kameraplatzhalter));
         }
 
         holder.rezeptname.setText(item.getName());

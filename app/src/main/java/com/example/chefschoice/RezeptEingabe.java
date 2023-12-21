@@ -295,7 +295,7 @@ public class RezeptEingabe extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
             imagePath = photoUri.toString();
-            Log.d("Bild", "Uri: " + photoUri.toString());
+            Log.d("Bild", "Uri: " + photoUri);
             Log.d("Bild", "File: " +  photFile.getAbsolutePath());
             fotoMachenIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             startActivityForResult(fotoMachenIntent,1);
