@@ -10,8 +10,5 @@ public interface RecipeDAO {
     List<Recipe> getAllRecipes();
     long addRecipe(Recipe rezept);
     void deleteRecipe(int id);
-
-    long getNextRecipeId();
-
     void updateRecipe(Recipe recipe);
 }

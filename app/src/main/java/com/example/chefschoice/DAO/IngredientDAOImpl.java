@@ -29,43 +29,6 @@ public class IngredientDAOImpl implements IngredientDAO{
         return id;
     }
 
-    //"useless"
-    @Override
-    public Ingredient getIngredientByName(String name) {
-        Cursor cs = db.query("Zutaten", null, "name=?", new String[]{name}, null, null, null);
-        if(cs != null){
-            if(cs.moveToFirst()){
-                long id = cs.getLong(cs.getColumnIndexOrThrow("ID"));
-                String zutatenName = cs.getString((cs.getColumnIndexOrThrow("Name")));
-                return new Ingredient(zutatenName, 0,null);
-            }
-            cs.close();
-        }
-        return null;
-    }
-
-    @Override
-    public List<Ingredient> getIngrediantsById(int id) {
-        String[] selectionArgs = {String.valueOf(id)};
-        Cursor cursor = db.rawQuery("SELECT * FROM Zutaten", selectionArgs);
-        List<Ingredient> zutaten = new ArrayList<>();
-        if(cursor != null){
-
-            while(cursor.moveToNext()){
-
-                String name = cursor.getString(cursor.getColumnIndexOrThrow("Name"));
-                Double menge = cursor.getDouble(cursor.getColumnIndexOrThrow("Menge"));
-                String einheit = cursor.getString(cursor.getColumnIndexOrThrow("Einheit"));
-
-                Ingredient aktZutat = new Ingredient(name,menge, einheit);
-
-                zutaten.add(aktZutat);
-            }
-        }
-        return zutaten;
-    }
-
-
     @Override
     public List<Ingredient> getIngrediantByRecipeId(long recipeId) {
         List<Ingredient> zutaten = new ArrayList<>();

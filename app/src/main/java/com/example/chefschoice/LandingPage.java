@@ -240,9 +240,6 @@ public class LandingPage extends AppCompatActivity{
             float r= 1- Math.abs(position);
             page.setScaleY(0.85f + r * 0.14f);
         });
-        for (Recipe r: recipesWeek) {
-            Log.d("viewpager", r.getName());
-        }
         viewPager.setAdapter(new ViewPagerAdapter(this,recipesWeek, allRecipes));
         viewPager.setPageTransformer(transformer);
     }

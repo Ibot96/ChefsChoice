@@ -82,21 +82,6 @@ public class RecipeDAOImpl implements RecipeDAO{
     }
 
     @Override
-    public long getNextRecipeId() {
-        Cursor cursor = db.rawQuery("SELECT MAX(id) +1 FROM Rezepte", null);
-
-        long nextId = 1;
-
-        if(cursor != null){
-            if(cursor.moveToFirst()){
-                nextId = cursor.getLong(0);
-            }
-            cursor.close();
-        }
-        return nextId;
-    }
-
-    @Override
     public void updateRecipe(Recipe recipe) {
         ContentValues values = new ContentValues();
 

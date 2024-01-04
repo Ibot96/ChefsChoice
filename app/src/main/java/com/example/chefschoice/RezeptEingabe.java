@@ -4,8 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -24,13 +22,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.chefschoice.Adapter.RezeptEingabeIngredientAdapter;
 import com.example.chefschoice.DAO.IngredientDAOImpl;
 import com.example.chefschoice.DAO.RecipeDAOImpl;
@@ -65,19 +60,12 @@ public class RezeptEingabe extends AppCompatActivity {
     private RezeptEingabeIngredientAdapter rezeptEingabeIngredientAdapter;
     private Recipe editRecipe;
 
-    private Uri bildUri = null;
-
     private boolean editFlag = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rezept_eingabe);
-
-        if (savedInstanceState != null){
-            onRestoreInstanceState(savedInstanceState);
-            showIngredientList(ingredientList);
-        }
 
         // db initialisieren
         dbHelper = new DatabaseHelper(this);
@@ -113,6 +101,10 @@ public class RezeptEingabe extends AppCompatActivity {
             ingredientList = ingredientDAO.getIngrediantByRecipeId(id);
             showIngredientList(ingredientList);
         }
+        if (savedInstanceState != null){
+            onRestoreInstanceState(savedInstanceState);
+            showIngredientList(ingredientList);
+        }
     }
 
 
@@ -124,8 +116,8 @@ public class RezeptEingabe extends AppCompatActivity {
         if(requestCode == 2 && data != null){
             Uri selectedImage = data.getData();
             Log.d("UriTest", String.valueOf(selectedImage));
-            File photFile = null;
-            Uri photoUri = null;
+            File photFile;
+            Uri photoUri;
             try {
                 photFile = getImageFile();
 
@@ -138,7 +130,7 @@ public class RezeptEingabe extends AppCompatActivity {
             copyImage(this,selectedImage,photoUri);
             inputBild.setImageURI(selectedImage);
             imagePath = photoUri.toString();
-            Log.d("UriTest", "Path" + imagePath);
+
         } else if (requestCode == 1) {
 
             inputBild.setImageURI(Uri.parse(imagePath));
@@ -152,9 +144,8 @@ public class RezeptEingabe extends AppCompatActivity {
         String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss", Locale.getDefault()).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 
-        return image;
+        return File.createTempFile(imageFileName, ".jpg", storageDir);
     }
 
     private void initInputs() {
@@ -172,7 +163,7 @@ public class RezeptEingabe extends AppCompatActivity {
 
         //hinzufügen der Zutaten in die Liste des Rezeptes
         add.setOnClickListener(v -> {
-            /*if(inputZutatenName.getText().length()!=0) {*/
+
                 //hide keyboard nach add button on click
                 View view = getCurrentFocus();
                 InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -194,18 +185,12 @@ public class RezeptEingabe extends AppCompatActivity {
                     toast.setText("Alles ausfüllen bitte");
                     toast.show();
                 }
-
-
-
                 //eingabefelder leeren
                 inputZutatenName.setText(null);
                 inputZutatenMenge.setText(null);
                 dropdown.setText(null);
                 //schließt die eingabefenster
                 findViewById(R.id.linearLayoutZutateneingabe).clearFocus();
-            /*}else{
-                Log.d("chefchoice2", "no INPUT");
-            }*/
         });
         speichern.setOnClickListener(v -> {
             //erstellen Rezept und in Datenbank eintragen
@@ -215,14 +200,8 @@ public class RezeptEingabe extends AppCompatActivity {
 
                 if (editFlag){
                     editRecipe.setBeschreibung(beschreibung);
-
-
                     editRecipe.setBild(imagePath);
-
-
-
                     editRecipe.setName(name);
-
                     ingredientDAO.updateIngredients(ingredientList, editRecipe.getId());
                     recipeDAO.updateRecipe(editRecipe);
                 }else {
@@ -231,8 +210,6 @@ public class RezeptEingabe extends AppCompatActivity {
                     long recipeID = recipeDAO.addRecipe(recipe);
                     ingredientDAO.addIngredients(ingredientList,recipeID);
                 }
-                //Log.d("chefchoice2", String.valueOf(numb));
-
                 //Intent auf die Rezeptliste
                 startActivity(new Intent(RezeptEingabe.this,RezeptUebersicht.class));
 
@@ -244,7 +221,6 @@ public class RezeptEingabe extends AppCompatActivity {
 
         liste.setOnItemClickListener((parent, view, position, id) -> {
                 Ingredient i = rezeptEingabeIngredientAdapter.getItem(position);
-                Log.d("chefchoice2", i.getName() + ", " + i.getMenge() + " " + i.getEinheit());
                 inputZutatenName.setText(i.getName());
                 inputZutatenMenge.setText(String.valueOf(i.getMenge()));
                 dropdown.setText(i.getEinheit());
@@ -253,9 +229,7 @@ public class RezeptEingabe extends AppCompatActivity {
                 ingredientList.remove(i);
                 rezeptEingabeIngredientAdapter.notifyDataSetChanged();
         });
-        inputBild.setOnClickListener(v -> {
-                initDialog();
-        });
+        inputBild.setOnClickListener(v -> initDialog());
     }
 
     private void initDialog() {
@@ -283,11 +257,10 @@ public class RezeptEingabe extends AppCompatActivity {
             toast.setText("Kamera");
             toast.show();
             Intent fotoMachenIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            File photFile = null;
-            Uri photoUri = null;
+            File photFile;
+            Uri photoUri;
             try {
                 photFile = getImageFile();
-
                 photFile.setReadable(true);
                 photFile.setWritable(true);
                 photoUri = FileProvider.getUriForFile(RezeptEingabe.this, "com.example.chefschoice.fileprovider", photFile);
@@ -295,8 +268,6 @@ public class RezeptEingabe extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
             imagePath = photoUri.toString();
-            Log.d("Bild", "Uri: " + photoUri);
-            Log.d("Bild", "File: " +  photFile.getAbsolutePath());
             fotoMachenIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             startActivityForResult(fotoMachenIntent,1);
             dialog.dismiss();
@@ -315,20 +286,6 @@ public class RezeptEingabe extends AppCompatActivity {
     void fillDropdown(){
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, R.layout.dropdown_list_item, getResources().getStringArray(R.array.einheiten));
         dropdown.setAdapter(spinnerAdapter);
-    }
-
-
-    private String removeUnwantedPrefix(String uriString) {
-        // Der unerwünschte Präfix
-        String unwantedPrefix = "/-1/1/content:/";
-
-        // Überprüfe, ob der Präfix im Uri-String vorhanden ist
-        if (uriString.startsWith(unwantedPrefix)) {
-            // Entferne den Präfix
-            return uriString.substring(unwantedPrefix.length());
-        }
-        // Wenn der Präfix nicht gefunden wurde, gib den ursprünglichen String zurück
-        return uriString;
     }
 
     //zurückbutton der Toolbar geht immer zur zuletzt geöffneten seite

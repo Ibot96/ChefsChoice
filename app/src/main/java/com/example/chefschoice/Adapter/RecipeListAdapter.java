@@ -90,17 +90,4 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
 
         return convertView;
     }
-
-    public Uri getBitmapForView(String path){
-        String imagePath = path;
-        Uri uri = null;
-
-
-        File imgFile = new File(imagePath);
-
-        if (imgFile.exists()) {
-          uri = Uri.fromFile(imgFile);
-        }
-            return  uri;
-        }
 }

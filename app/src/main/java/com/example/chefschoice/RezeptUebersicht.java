@@ -10,13 +10,11 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import com.example.chefschoice.Adapter.OnButtonClickListener;
 import com.example.chefschoice.Adapter.RecipeListAdapter;
 import com.example.chefschoice.DAO.RecipeDAOImpl;
@@ -29,7 +27,6 @@ public class RezeptUebersicht extends AppCompatActivity implements OnButtonClick
 
     private ListView liste;
     private RecipeDAOImpl recipeDAO;
-
     private ArrayList<Recipe> rezepte;
     private androidx.appcompat.widget.Toolbar toolbar;
     private ImageButton zuRezepteingabe;
@@ -49,23 +46,17 @@ public class RezeptUebersicht extends AppCompatActivity implements OnButtonClick
         zuRezepteingabe.setOnClickListener(view -> {
             startActivity(new Intent(RezeptUebersicht.this, RezeptEingabe.class));
         });
-
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         recipeDAO = new RecipeDAOImpl(db);
         rezepte = recipeDAO.getAllRecipes();
-
         liste = findViewById(R.id.liste);
-
-
-
         adapter = new RecipeListAdapter(this, R.layout.recipelistadapter, rezepte);
         adapter.setOnButtonClickListener(this);
         liste.setAdapter(adapter);
-
         liste.setOnItemClickListener((parent, view, position, id) -> {
-            Recipe seletedRecipe = (Recipe) liste.getItemAtPosition(position);
-            int recipeId = seletedRecipe.getId();
+            Recipe selectedRecipe = (Recipe) liste.getItemAtPosition(position);
+            int recipeId = selectedRecipe.getId();
 
             Intent intent = new Intent(RezeptUebersicht.this, Detailansicht.class);
             intent.putExtra("selctedRecipe", recipeId);
@@ -95,20 +86,14 @@ public class RezeptUebersicht extends AppCompatActivity implements OnButtonClick
 
     private void askPermission(){
         if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED){
-
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, 123);
         }
-
         if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED){
-
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_MEDIA_IMAGES}, 124);
         }
-
         if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-            Log.e("ddd", "Permission");
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 125);
         }
     }
-
 }
 

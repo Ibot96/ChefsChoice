@@ -13,8 +13,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        //Datenbanken löschen
-        //context.deleteDatabase(DATABASE_NAME);
     }
 
     @Override

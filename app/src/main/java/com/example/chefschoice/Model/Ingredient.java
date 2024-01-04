@@ -10,13 +10,7 @@ public class Ingredient {
 
     private String einheit;
 
-    public Ingredient(long id, String name, long recipeId, double menge, String einheit) {
-        this.id = id;
-        this.name = name;
-        this.recipeId = recipeId;
-        this.menge = menge;
-        this.einheit = einheit;
-    }
+
     public Ingredient( String name, double menge, String einheit) {
         this.name = name;
         this.menge = menge;
