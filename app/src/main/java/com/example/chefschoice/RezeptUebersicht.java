@@ -5,14 +5,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.example.chefschoice.Adapter.OnButtonClickListener;
@@ -36,7 +34,7 @@ public class RezeptUebersicht extends AppCompatActivity implements OnButtonClick
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rezept_uebersicht);
-        toolbar = (Toolbar) findViewById(R.id.toolbarUebersicht);
+        toolbar = findViewById(R.id.toolbarUebersicht);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

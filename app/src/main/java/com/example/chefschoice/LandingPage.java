@@ -1,7 +1,6 @@
 package com.example.chefschoice;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.CompositePageTransformer;
@@ -19,7 +18,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import java.util.Map;
 import java.util.Random;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -54,7 +52,7 @@ public class LandingPage extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.landing_page);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -125,10 +123,10 @@ public class LandingPage extends AppCompatActivity{
         });
     }
     private void initFABMenu(){
-        addFab = (FloatingActionButton) findViewById(R.id.menu_add);
-        createFab = (FloatingActionButton) findViewById(R.id.menu_create);
-        listFab = (FloatingActionButton) findViewById(R.id.menu_list);
-        FloatingActionButton menuFab = (FloatingActionButton) findViewById(R.id.menu);
+        addFab = findViewById(R.id.menu_add);
+        createFab = findViewById(R.id.menu_create);
+        listFab = findViewById(R.id.menu_list);
+        FloatingActionButton menuFab = findViewById(R.id.menu);
 
         //Hide buttons
         addFab.setVisibility(View.GONE);

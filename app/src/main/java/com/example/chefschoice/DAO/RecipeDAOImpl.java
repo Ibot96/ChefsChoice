@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeDAOImpl implements RecipeDAO{
-    private SQLiteDatabase db;
+    private final SQLiteDatabase db;
 
     public RecipeDAOImpl(SQLiteDatabase db) {
         this.db = db;
@@ -92,6 +92,4 @@ public class RecipeDAOImpl implements RecipeDAO{
         db.update("Rezepte", values, "ID = ?", new String[]{String.valueOf(recipe.getId())});
         /*db.close();*/
     }
-
-
 }

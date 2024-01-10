@@ -11,7 +11,7 @@ import java.util.List;
 
 public class IngredientDAOImpl implements IngredientDAO{
 
-    private SQLiteDatabase db;
+    private final SQLiteDatabase db;
 
     public IngredientDAOImpl(SQLiteDatabase db) {
         this.db = db;

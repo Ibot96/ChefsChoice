@@ -1,31 +1,22 @@
 package com.example.chefschoice.Adapter;
-import static androidx.core.content.ContextCompat.startActivity;
+
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.chefschoice.Detailansicht;
-import com.example.chefschoice.LandingPage;
 import com.example.chefschoice.Model.Recipe;
 import com.example.chefschoice.R;
-import com.example.chefschoice.RezeptEingabe;
-import com.example.chefschoice.RezeptUebersicht;
-
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 

@@ -1,37 +1,20 @@
 package com.example.chefschoice.Adapter;
 
-import android.Manifest;
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
+
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import com.example.chefschoice.Detailansicht;
 import com.example.chefschoice.Model.Recipe;
 import com.example.chefschoice.R;
-import com.example.chefschoice.RezeptEingabe;
-
-import java.io.File;
 import java.util.ArrayList;
 
 public class RecipeListAdapter extends ArrayAdapter<Recipe> {
@@ -84,7 +67,7 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
             Log.e("Err", "File Not Found");
         }
 
-        TextView nameView = (TextView)  convertView.findViewById(R.id.text);
+        TextView nameView = convertView.findViewById(R.id.text);
 
         nameView.setText(name);
 

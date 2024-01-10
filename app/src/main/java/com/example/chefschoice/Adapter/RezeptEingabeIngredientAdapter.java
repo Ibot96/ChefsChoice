@@ -6,13 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.example.chefschoice.Model.Ingredient;
 import com.example.chefschoice.R;
-
 import java.util.List;
 
 public class RezeptEingabeIngredientAdapter extends ArrayAdapter<Ingredient> {
@@ -36,10 +33,10 @@ public class RezeptEingabeIngredientAdapter extends ArrayAdapter<Ingredient> {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         view = inflater.inflate(mRessource, parent,false);
 
-        TextView positionNumber = (TextView) view.findViewById(R.id.PositionIngriedentlist);
-        TextView zutatenName = (TextView)  view.findViewById(R.id.ingriedientName);
-        TextView menge = (TextView)  view.findViewById(R.id.ingriedientMenge);
-        TextView einheit2 = (TextView) view.findViewById(R.id.ingriedienteinheit);
+        TextView positionNumber = view.findViewById(R.id.PositionIngriedentlist);
+        TextView zutatenName = view.findViewById(R.id.ingriedientName);
+        TextView menge = view.findViewById(R.id.ingriedientMenge);
+        TextView einheit2 = view.findViewById(R.id.ingriedienteinheit);
 
         positionNumber.setText((position+1) + ". ");
         zutatenName.setText(ingredient.getName());

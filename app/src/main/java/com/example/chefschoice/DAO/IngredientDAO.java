@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface IngredientDAO {
 
-    public long insertIngredient(Ingredient zutat);
+    long insertIngredient(Ingredient zutat);
 
-    public List<Ingredient> getIngrediantByRecipeId(long recipeId);
-    public void addIngredients(List<Ingredient> zutaten, long recipeID);
+    List<Ingredient> getIngrediantByRecipeId(long recipeId);
+    void addIngredients(List<Ingredient> zutaten, long recipeID);
 
-    public void updateIngredients(List<Ingredient> zutaten, long recipeID);
+    void updateIngredients(List<Ingredient> zutaten, long recipeID);
 }

@@ -24,7 +24,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 import com.example.chefschoice.Adapter.RezeptEingabeIngredientAdapter;
 import com.example.chefschoice.DAO.IngredientDAOImpl;
@@ -74,7 +73,7 @@ public class RezeptEingabe extends AppCompatActivity {
         ingredientDAO = new IngredientDAOImpl(db);
         imagePath = null;
         //initialisieren der toolbar
-        toolbar = (Toolbar) findViewById(R.id.rezepteingabetoolbar);
+        toolbar = findViewById(R.id.rezepteingabetoolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

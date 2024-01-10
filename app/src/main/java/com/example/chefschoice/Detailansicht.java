@@ -1,11 +1,7 @@
 package com.example.chefschoice;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,16 +12,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import com.example.chefschoice.Adapter.DetailAnsichtIngrediantAdapter;
 import com.example.chefschoice.DAO.IngredientDAOImpl;
 import com.example.chefschoice.DAO.RecipeDAOImpl;
 import com.example.chefschoice.DB.DatabaseHelper;
 import com.example.chefschoice.Model.Ingredient;
 import com.example.chefschoice.Model.Recipe;
-import java.io.File;
 import java.util.List;
 
 public class Detailansicht extends AppCompatActivity {
@@ -54,7 +46,7 @@ public class Detailansicht extends AppCompatActivity {
         txtName = findViewById(R.id.txtRezeptname);
         imView = findViewById(R.id.imViewGericht);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbarDetail);
+        toolbar = findViewById(R.id.toolbarDetail);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
