@@ -5,14 +5,14 @@
     <color name="grey">#A0A1A4</color>
 
     <!--LightMode-->
-    <color name="Primary_Color_Light_Dark">#FF9800</color>
-    <color name="Primary_Color_Light">#ffac07</color>
-    <color name="Accent_Color_Light">#FF9800</color>
+    <color name="Primary_Color_Light_Dark">#789461</color>
+    <color name="Primary_Color_Light">#294B29</color>
+    <color name="Accent_Color_Light">#789461</color>
 
     <!--DarkMode-->
-    <color name="Primary_Color_Daynight">#FF5722</color>
-    <color name="Primary_Color_Daynight_Dark">#F57C00</color>
-    <color name="Accent_Color_Dark">#FF5722</color>
+    <color name="Primary_Color_Daynight">#789461</color>
+    <color name="Primary_Color_Daynight_Dark">#294B29</color>
+    <color name="Accent_Color_Dark">#789461</color>
 
     <!--Text-->
     <color name="Primary_Text">#000000</color>

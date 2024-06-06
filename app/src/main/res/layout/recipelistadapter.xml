@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants"
+    android:background="?attr/colorPrimary"
     >
 
     <ImageView
@@ -19,8 +20,9 @@
 
     <TextView
         android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.5"
         android:gravity="center"
         android:text="@string/test"
         android:textColor="@color/black"
@@ -44,7 +46,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="top"
-            android:backgroundTint="?attr/colorPrimaryDark"
+            android:backgroundTint="?attr/colorPrimary"
             android:src="@drawable/deleteicon"
             android:contentDescription="@string/rezept_l_schen"
             android:focusable="false"
@@ -56,7 +58,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center_vertical"
-            android:backgroundTint="?attr/colorPrimaryDark"
+            android:backgroundTint="?attr/colorPrimary"
             android:src="@drawable/edit_icon_foreground"
             android:contentDescription="Rezept bearbeiten"
             android:focusable="false"

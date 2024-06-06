@@ -129,6 +129,7 @@ public class LandingPage extends AppCompatActivity{
         FloatingActionButton menuFab = findViewById(R.id.menu);
 
         //Hide buttons
+
         addFab.setVisibility(View.GONE);
         createFab.setVisibility(View.GONE);
         listFab.setVisibility(View.GONE);
