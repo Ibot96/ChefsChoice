@@ -10,6 +10,7 @@ public class Recipe {
     private String beschreibung;
 
     private String bild;
+    private String kategorie;
 
     public int getId() {
         return id;
@@ -19,17 +20,19 @@ public class Recipe {
         this.id = id;
     }
 
-    public Recipe(String name, String beschreibung, String bild) {
+    public Recipe(String name, String beschreibung, String bild, String kategorie) {
         this.name = name;
         this.bild = bild;
         this.beschreibung = beschreibung;
+        this.kategorie = kategorie;
     }
 
-    public Recipe(int id, String name, String beschreibung, String bild){
+    public Recipe(int id, String name, String beschreibung, String bild, String kategorie){
         this.id = id;
         this.name = name;
         this.bild = bild;
         this.beschreibung = beschreibung;
+        this.kategorie = kategorie;
     }
 
 

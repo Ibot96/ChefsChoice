@@ -33,7 +33,7 @@ public class RecipeDAOImpl implements RecipeDAO{
                 String beschreibung = cursor.getString(cursor.getColumnIndexOrThrow("Beschreibung"));
                 String bild = cursor.getString(cursor.getColumnIndexOrThrow("Bild"));
 
-                Recipe aktRezept = new Recipe(recipeId,name,beschreibung,bild);
+                Recipe aktRezept = new Recipe(recipeId,name,beschreibung,bild,"Sonstiges");
                 cursor.close();
                 return aktRezept;
             }
@@ -55,7 +55,7 @@ public class RecipeDAOImpl implements RecipeDAO{
                 String beschreibung = cursor.getString(cursor.getColumnIndexOrThrow("Beschreibung"));
                 String bild = cursor.getString(cursor.getColumnIndexOrThrow("Bild"));
 
-                Recipe aktRezept = new Recipe(id,name,beschreibung,bild);
+                Recipe aktRezept = new Recipe(id,name,beschreibung,bild, "Sonstiges");
 
                 rezepte.add(aktRezept);
             }

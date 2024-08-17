@@ -205,7 +205,7 @@ public class RezeptEingabe extends AppCompatActivity {
                     recipeDAO.updateRecipe(editRecipe);
                 }else {
                     //speichern in db
-                    Recipe recipe = new Recipe(name,beschreibung,bild);
+                    Recipe recipe = new Recipe(name,beschreibung,bild, "Sonstiges");
                     long recipeID = recipeDAO.addRecipe(recipe);
                     ingredientDAO.addIngredients(ingredientList,recipeID);
                 }
