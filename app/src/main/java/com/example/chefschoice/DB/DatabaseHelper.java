@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "ChefsChoice.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -15,6 +15,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
 
         db.execSQL("CREATE TABLE IF NOT EXISTS Rezepte ("
                 + "ID INTEGER PRIMARY KEY AUTOINCREMENT ,"
@@ -34,6 +35,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldV, int newV) {
+        if (oldV < 2) { // Erhöhen Sie die Version, wenn Sie Änderungen vornehmen
+            db.execSQL("CREATE TABLE Kategorien (" +
+                    "    ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "    Name TEXT" +
+                    ");");
+            db.execSQL("ALTER TABLE Rezepte ADD COLUMN Kategorie Integer");
 
+            // Optionale Datenmigration: Alle Rezepte der Kategorie "Sonstiges" zuweisen
+            db.execSQL("Insert into Kategorien (name) values ('Sonstiges')");
+            db.execSQL("UPDATE Rezepte SET Kategorie = 1");
+        }
     }
 }

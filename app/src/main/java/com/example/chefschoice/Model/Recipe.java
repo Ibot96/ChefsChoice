@@ -60,6 +60,12 @@ public class Recipe {
     public void setBeschreibung(String beschreibung) {
         this.beschreibung = beschreibung;
     }
+    public String getKategorie() {
+        return kategorie;
+    }
+    public void setKategorie(String kategorie) {
+        this.kategorie = kategorie;
+    }
 
     @Override
     public boolean equals(Object o) {

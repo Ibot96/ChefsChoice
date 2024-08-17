@@ -54,8 +54,9 @@ public class RecipeDAOImpl implements RecipeDAO{
                 String name = cursor.getString(cursor.getColumnIndexOrThrow("Name"));
                 String beschreibung = cursor.getString(cursor.getColumnIndexOrThrow("Beschreibung"));
                 String bild = cursor.getString(cursor.getColumnIndexOrThrow("Bild"));
+                String kategorie = cursor.getString(cursor.getColumnIndexOrThrow("Kategorie"));
 
-                Recipe aktRezept = new Recipe(id,name,beschreibung,bild, "Sonstiges");
+                Recipe aktRezept = new Recipe(id,name,beschreibung,bild, kategorie);
 
                 rezepte.add(aktRezept);
             }
@@ -67,9 +68,9 @@ public class RecipeDAOImpl implements RecipeDAO{
     public long addRecipe(Recipe rezept) {
         ContentValues values = new ContentValues();
         values.put("name", rezept.getName());
-        //byte[] image = getImageAsByteArray("C:\\Users\\JanLudwig\\OneDrive\\Desktop\\Pfannkuchen.png");
         values.put("bild", rezept.getBild());
         values.put("beschreibung", rezept.getBeschreibung());
+        values.put("kategorie", rezept.getKategorie());
 
         long newRow = db.insert("Rezepte", null, values);
         return newRow;
@@ -88,6 +89,7 @@ public class RecipeDAOImpl implements RecipeDAO{
         values.put("Name", recipe.getName());
         values.put("Beschreibung", recipe.getBeschreibung());
         values.put("Bild", recipe.getBild());
+        values.put("Kategorie", recipe.getKategorie());
 
         db.update("Rezepte", values, "ID = ?", new String[]{String.valueOf(recipe.getId())});
         /*db.close();*/
